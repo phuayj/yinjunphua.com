@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Reflections on My First Lecture | Thoughts | Yin Jun, Phua -- Assistant Professor at Tokyo Tech</title>
+	<meta name="description" content="Yin Jun Phua, currently an assistant professor at Tokyo Institute of Technology. Main research focus is on brdging the gap between symbolic AI and neural networks.">
+	<link rel="stylesheet" href="/css/chota.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="content-language" content="en">
+	<link rel="canonical" href="https://yinjunphua.com/thoughts/2023-08-23-reflections-on-my-first-lecture.html">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="pull-right">
+					EN | <a href="/ja/">日本語</a>
+				</div>
+			</div>
+		</div>
+		<nav class="nav">
+			<div class="nav-left">
+				<a href="/" class="is-paddingless"><h2 class="is-marginless">Yin Jun, Phua <small>&mdash; Thoughts</small></h2></a>
+			</div>
+			<div class="nav-right">
+				<a href="/my-research.html">My Research</a>
+			</div>
+		</nav>
+		<hr>
+		<h1>Reflections on My First Lecture</h1>
+		<p class="text-grey"><small>Published on August 23, 2023</small></p>
+		<div class="post">
+			<p>I have just finished grading and submitting the final scores for the first ever lecture I was responsible for last Monday. I have been a student prior to this for my entire life, so it was a totally new experience to organize and to teach something to students. Even though I was only responsible for the labwork part of the lecture, there was considerable freedom given to me regarding the contents of the lecture and the assignments.</p>
+			<p>Having been programming since 12 years old, I considered myself rather qualified to teach the lecture. Being much closer to the industry than to academia (only in terms of programming), I had my own frustrations while taking the same exact lecture when I was a student at the same exact school. Therefore, I wanted to structure a course which student me would have wanted.</p>
+			<p>Introductory programming courses in most universities focus heavily on algorithm implementations or leetcode style programming problems (even though the course title had the word "Advanced", it is only the second programming course that students take, so I would still consider it introductory). However, based on what I have seen in the industry, most programming don't look like that at all. In fact, over-emphasis on these kinds of aspects appear to be actively harming the industry. When I planned for the lecture, I wanted to deliberately avoid giving these kinds of assignments.</p>
+			<p>The first topic that I wanted to integrate into the course, was the skill of breaking down large problems into smaller ones and solve them step-by-step. Most students at this stage of their life, has never built a large and complex program before. If anything, they mostly did one-off small programming exercises, and maybe they would assume that all of programming will look like that. To break off from that, I designed each assignment with a goal of writing a relatively complex, useful program at the end. For example, the first assignment was to write a program that reads a binary file consisting of numbers in big endian, and to sort by tuples and output them again in big endian. The individual tasks of reading a file, converting numbers from big endian to little endian, sorting numbers, writing the results into a file, are not difficult. The difficulty mostly lie in the combination of all of it. Most students, without guidance, would probably not be able to write such a program in one go.</p>
+			<p>Another thing that I wanted to push for, was to let students spend as much time programming as possible. This means tougher and lengthier assignments. However, setting the difficulty of the assignment was a very hard problem. The skill range of the students coming into the course varies by a lot. There are students who already know how to program very well, but on the other end of the spectrum, there are students who don't even know how to write a program. The sweat spot that I think I've found towards the end of the course, was to make the first and second part of the assignment simple and introductory. The forth part of the assignment is tougher and takes some time to implement, while the last part asks the student to come up with their own features to implement. This strikes a certain balance where beginner students can still score decent points, while setting up some challenge for the more advanced students.</p>
+			<p>I also wanted to advocate for the use of debuggers. When I asked the previous instructor for this course about the aspect of programming I should teach, the answer given was the technique of debugging. Most students, when faced with a certain problem (like the program not compiling, or not working at all), have no idea what to do next. C programs are notorious for only giving minimal amount of information when they fail (e.g. segmentation fault). So I did introduce the usage of a debugger, in VSCode, to make it possible to determine which line was causing the fault. I believe this did help reduce questions from the students by a great degree, as based on the difficulty of the assignments given, I was expecting to spend a larger amount of time providing support to students. However there were some feedback regarding setup problems with the debugger, so I might consider spending a bit more time doing tutorials for the debugger.</p>
+			<p>One thing that I was surprised about, was the lack of some basic computer literacy for some students. I was expecting that, given these were students in the CS department, that most of them would understand computers fairly well. However, I had to teach some of them about directory and files, and also about working directory. There were some time when computers were almost ubiquitous, but as more and more handheld devices spread and get locked down (like the iPad), there might be more and more students who do not understand the concept of files and directories. The unfortunate trend of computing that is tending towards the walled garden path, is definitely going to impact the future generation of CS students.</p>
+			<p>Another thing I probably could have done better, was to restructure the time for each class. The course before this course is taught (the prerequisite course), was structured such that the first 30 minutes consists of the lecturer revisiting some concepts, and the next few hours for the students to finish up their assignment and hand them in. I decided to adopt the same approach to see how it worked out. Unfortunately, the assignment from the previous week was supposed to end 30 minutes into the lecture. That deadline was set so that students could come in and ask questions in person should there be any, but that turned out to be a mistake. Some students were focusing too much on finishing the previous assignment before the deadline, such that they weren't able to capture anything when I was revisiting the concepts required for the next assignment. Most students also just came for the time when I was lecturing, but went back home to actually do the assignment. So when I scheduled TAs to help students out, most students either just started to understand the assignment or went back home. Given the way I've designed the assignments, most students probably will only have questions once they're several hours into it, so it would be better to dedicate time purely for Q&A for the previous assignment in the beginning of the class, revisit the concepts and perhaps have a bit of time at the end of the class for early questions.</p>
+			<p>Was I successful in teaching this lecture? It was really difficult to tell. I've collected a survey at the end of the course, but only half of the students answered so it only tells a partial picture. Most students lamented with the difficulty of the course, and the amount of time needed to spend to work on the assignment. Although it was a deliberate decision from my end, it is possible that the workload was a bit on the heavy side. There were however positive feedback with regards to the difficulty, some felt that it did help improve their skills. I already have a few more ideas on how to improve the course, hopefully I would be able to get better feedback the next year.</p>
+		</div>
+		<hr />
+		<p class="text-grey text-center">Have comments or want to have discussions about the contents of this post? You can always contact me by email.</p>
+		<p><a href="/">&laquo; Back to home</a></p>
+	</div>
+
+	<footer class="text-center">
+		<p><a href="https://orcid.org/0000-0003-1178-8238" target="_blank">ORCID</a> &bull; <a href="https://researchmap.jp/phuayj?lang=en" target="_blank">researchmap</a> &bull; <a href="https://dblp.org/pid/217/3830.html" target="_blank">dblp</a></p>
+		<p>You can contact me at phua<span class="replace"> [at] </span>c.titech.ac.jp</p>
+		<h5>&copy; Yin Jun Phua</h5>
+	</footer>
+
+	<script type="text/javascript">
+		var selEl = (q) => document.querySelectorAll(q);
+		document.addEventListener('DOMContentLoaded', function(e) {
+			selEl('.replace').forEach(el => {
+				el.innerHTML = '&#x40;';
+			});
+		});
+	</script>
+</body>
+</html>
