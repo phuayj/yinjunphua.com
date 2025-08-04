@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CUDA Unknown Error with Podman | Thoughts | Yin Jun, Phua -- Assistant Professor at Tokyo Tech</title>
+	<meta name="description" content="Yin Jun Phua, currently an assistant professor at Tokyo Institute of Technology. Main research focus is on bridging the gap between symbolic AI and neural networks.">
+	<link rel="stylesheet" href="/css/chota.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="content-language" content="en">
+	<link rel="canonical" href="https://yinjunphua.com/thoughts/2024-01-18-cuda-unknown-error-with-podman.html">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="pull-right">
+					EN | <a href="/ja/">日本語</a>
+				</div>
+			</div>
+		</div>
+		<nav class="nav">
+			<div class="nav-left">
+				<a href="/" class="is-paddingless"><h2 class="is-marginless">Yin Jun, Phua <small>&mdash; Thoughts</small></h2></a>
+			</div>
+			<div class="nav-right">
+				<a href="/my-research.html">My Research</a>
+			</div>
+		</nav>
+		<hr>
+		<h1>CUDA Unknown Error with Podman</h1>
+		<p class="text-grey"><small>Published on January 18, 2024</small></p>
+		<div class="post">
+			<p>As I was setting up my new deep learning workstation with Debian 12, I found out that <a href="https://docs.nvidia.com/ai-enterprise/deployment-guide-rhel-with-kvm/0.1.0/podman.html" target="_blank" rel="nofollow">Nvidia now supports Podman</a>. With all kinds of bad rumors surrounding Docker, I decided to try out Podman.</p>
+			<p>Once I had successfully navigated through the <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html" target="_blank" rel="nofollow">installation process</a> and <a href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/cdi-support.html" target="_blank" rel="nofollow">set up CDI for Podman</a>, I was able to get a CUDA container up and running. Running <code>nvidia-smi</code> in the container confirmed that the GPU is available. However, when I tried to run any CUDA program, it resulted in an "Unknown error" message. The message itself contained no useful information, and I had no lead to even start troubleshooting this.</p>
+			<p>At first, I thought that maybe there were some limitations with the CUDA version on the host and the container. But despite running the same CUDA version, it still didn't work. Even turning to Google didn't yield anything helpful.</p>
+			<p>I had another Debian machine running CUDA in a Docker container just fine, so I figured I might as well check if there were any differences in the container. I stumbled upon a <a href="https://github.com/containers/podman/issues/9926#issuecomment-814665732" target="_blank" rel="nofollow">Github issue</a> that was for a totally different problem, but it suggested that not having the correct device files under <code>/dev</code> can cause CUDA to fail. This prompted me to look further into it.</p>
+			<p>Interestingly enough, there was a difference. The <code>/dev</code> folder in the Docker container included <code>/dev/nvidia-uvm</code> and <code>/dev/nvidia-uvm-tools</code>, whereas the Podman container did not. I realized that the <code>nvidia-uvm</code> kernel module wasn't loaded on the new workstation. So I tried to <code>modprobe nvidia-uvm</code> and check to see if it would solve the issue... and it didn't.</p>
+			<p>Turns out, manually loading the <code>nvidia-uvm</code> kernel module doesn't create the device files. So I found <a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#device-node-verification" target="_blank" rel="nofollow">this script</a> on Nvidia's website that will create the necessary device files, and ran the relevant commands.</p>
+			<pre># grep nvidia-uvm /proc/devices
+&lt;device-id&gt; nvidia-uvm
+# mknod -m 666 /dev/nvidia-uvm c &lt;device-id&gt; 0
+# mknod -m 666 /dev/nvidia-uvm-tools c &lt;device-id&gt; 1</pre>
+			<p>Then, after regenerating the CDI configuration file, it finally worked.</p>
+			<p><code>nvidia-uvm</code> seems to be loaded automatically when a program initializes CUDA. But for whatever reason, this wasn't happening with programs running within the Podman container. I have yet to determine whether this is down to the rootless container or needing the <code>--privileged</code> flag, but for now, manually loading the kernel module and creating the device files seems to fix the issue.</p>
+		</div>
+		<hr />
+		<p class="text-grey text-center">Have comments or want to have discussions about the contents of this post? You can always contact me by email.</p>
+		<p><a href="/">&laquo; Back to home</a></p>
+	</div>
+
+	<footer class="text-center">
+		<p><a href="https://orcid.org/0000-0003-1178-8238" target="_blank">ORCID</a> &bull; <a href="https://researchmap.jp/phuayj?lang=en" target="_blank">researchmap</a> &bull; <a href="https://dblp.org/pid/217/3830.html" target="_blank">dblp</a></p>
+		<p>You can contact me at phua<span class="replace"> [at] </span>c.titech.ac.jp</p>
+		<h5>&copy; Yin Jun Phua</h5>
+	</footer>
+
+	<script type="text/javascript">
+		var selEl = (q) => document.querySelectorAll(q);
+		document.addEventListener('DOMContentLoaded', function(e) {
+			selEl('.replace').forEach(el => {
+				el.innerHTML = '&#x40;';
+			});
+		});
+	</script>
+</body>
+</html>
