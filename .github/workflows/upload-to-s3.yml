@@ -1,0 +1,29 @@
+name: Upload to S3
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ap-northeast-1
+  S3_BUCKET: yinjunphua.com
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::180964446480:role/github-yinjunphuacom-s3-upload
+
+      - name: Sync folder to S3
+        run: |
+          aws s3 sync --delete --exclude 'venv/*' --exclude '.DS_Store' --exclude '*/.DS_Store' --exclude 'upload.sh' --exclude '.gitignore' --exclude '.git/*' . "s3://${{ env.S3_BUCKET }}"
