@@ -24,6 +24,9 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: arn:aws:iam::180964446480:role/github-yinjunphuacom-s3-upload
 
+      - name: Restore file mtimes from Git
+        uses: chetan/git-restore-mtime-action@v2
+
       - name: Sync folder to S3
         run: |
           aws s3 sync --delete --exclude '.github/*' --exclude 'venv/*' --exclude '.DS_Store' --exclude '*/.DS_Store' --exclude 'upload.sh' --exclude '.gitignore' --exclude '.git/*' . "s3://${{ env.S3_BUCKET }}"
