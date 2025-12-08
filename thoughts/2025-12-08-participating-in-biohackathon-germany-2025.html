@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Participating in Biohackathon Germany 2025 | Thoughts | Yin Jun, Phua -- Assistant Professor at Tokyo Tech</title>
+	<meta name="description" content="Yin Jun Phua, currently an assistant professor at Tokyo Institute of Technology. Main research focus is on bridging the gap between symbolic AI and neural networks.">
+	<link rel="stylesheet" href="/css/chota.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="content-language" content="en">
+	<link rel="canonical" href="https://yinjunphua.com/thoughts/2025-12-08-participating-in-biohackathon-germany-2025.html">
+	<script defer src="https://um.yinjunphua.com/script.js" data-website-id="553526c2-8bba-4565-af3b-38ce4c9e4002"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<div class="pull-right">
+					EN | <a href="/ja/">日本語</a>
+				</div>
+			</div>
+		</div>
+		<nav class="nav">
+			<div class="nav-left">
+				<a href="/" class="is-paddingless"><h2 class="is-marginless">Yin Jun, Phua <small>&mdash; Thoughts</small></h2></a>
+			</div>
+			<div class="nav-right">
+				<a href="/my-research.html">My Research</a>
+			</div>
+		</nav>
+		<hr>
+		<h1>Participating in Biohackathon Germany 2025</h1>
+		<p class="text-grey"><small>Published on December 8, 2025</small></p>
+		<div class="row">
+			<div class="col-8">
+				<picture>
+					<source srcset="/images/biohackathon-germany-2025-nerve.webp" type="image/webp">
+					<source srcset="/images/biohackathon-germany-2025-nerve.png" type="image/png">
+					<img src="/images/biohackathon-germany-2025-nerve.png" alt="NERVE - Neuro-symbolic Evidence Review and Verification Engine">
+				</picture>
+				<p class="text-dark"><small>Neuro-symbolic Evidence Review and Verification Engine</small></p>
+			</div>
+		</div>
+		<div class="post">
+			<p>Last week, I had the pleasant opportunity to participate in the <a href="https://www.denbi.de/de-nbi-events/1935-4th-biohackathon-germany-detection-and-extraction-of-datasets-for-training-machine-learning-methods-from-literature" rel="nofollow" target="_blank">4th Biohackathon Germany</a>. I joined remotely, and the time zone difference meant I was participating mostly late at night from home. To avoid waking my newborn son, I kept my mic off, but I still managed to interact with several participants, both remote and on-site through Slack. A huge thank you goes to my good friend Foo Wei, who helped introduce my project to the community on my behalf.</p>
+			<p>I was originally invited as a support member for the use case that Foo Wei was leading, where I might be able to provide some of my expertise, mainly in neuro-symbolic. But since I was also allowed to come up with a project of my own and work on it, I decided to give it a go, with a twist. I was going to embrace the full-on vibe-hackathon way of doing things, i.e. heavily leaning into LLM agents, and attempting to do as little manual work as possible.</p>
+			<p>Even starting from the project's original idea, I tried brainstorming with LLMs. Since it's a Biohackathon, the project had to involve some level of biology, which I'm not an expert in. The main topic that we needed to cover was LLM and MCP, so that was a constraint. In addition to that, I wanted to include my expertise in Neuro-Symbolic, and since I've done some work with GNNs and Class-Incremental Learning, I thought I'd include them too. An idea that involve all of these wasn't immediately obvious, so I did the brainstorming with both Gemini (2.5 Pro with Deep Think) and ChatGPT (5 Pro), and ended up liking the idea that ChatGPT came up more. Purely asking the LLMs to come up with ideas turned up very poor results, so there needed to be some back-and-forth. The idea should also be unique and novel, or at least something no one has worked on before, so asking the LLMs to do research and discard previously worked on ideas turned out to be quite important. Otherwise we'd get very common ideas that have already been worked on.</p>
+			<p>With that, ChatGPT came up with the quite novel and actually quite interesting idea of a "BioAgent Skeptic Auditor". Assuming that a Biomedical LLM agent already exists, we know LLMs are prone to generating hallucinations or inaccurate claims, how do we ensure that the claim is accurate, which is of utmost importance in the field of biomedicine? This skeptic auditor, which we called NERVE (Neuro-symbolic Evidence Review and Verification Engine; name also attributed to LLM, in this case Claude Opus 4.5), is designed as an MCP that the BioAgent will call whenever it attempts to make a biomedical claim and receive a verdict PASS/FAIL/WARN with regard to the claim. In the background, NERVE would first have to extract entities that are involved in the claim (e.g. genes or diseases being mentioned), and figure out the predicate of the claim.</p>
+			<p>Once we have this, we can do several things. We would do a "typecheck" according to ontology hierarchies, such that claims that says diseases activate genes, which are biologically impossible, are rejected immediately. We would then also check biological knowledge graphs (e.g. <a href="https://monarchinitiative.org/" rel="nofollow" target="_blank">MONARCH</a>, <a href="https://reactome.org/" rel="nofollow" target="_blank">Reactome</a>, etc), enriched with PubMed data, to see if the relationship of the entities mentioned are substantiated. There's also a Suspicion GNN which is trained to detect "suspicious edges" by scoring them. The Suspicion GNN scores suspicion currently by looking at retracted papers, which related edges would be 100% suspicious, and try to learn other edges that have similar structure to label them as suspicious as well. It's not a very well-defined thing just yet, but that would be left to future work.</p>
+			<p>We then also have a rule engine that will check across various rules and fire with different scores. The scores will then affect the final verdict. There are several soft rules and also several hard rules, where if the hard rules fire it immediately leads to a verdict regardless of the overall score. All of these mechanisms are displayed beautifully with a <a href="https://streamlit.io/" rel="nofollow" target="_blank">Streamlit</a> Audit Card app, where we can inspect every step of the pipeline in a browser. This allows biologists to input a claim, provide some evidence in PubMed or some specific genes in the knowledge graph node, and get a verdict in addition to the reason of the verdict. All of these can be seen in the <a href="https://nerve.yinjunphua.com" target="_blank">live demo</a> (use biohack/2025 for username/password). While I continue to receive feedback and work more on NERVE, I'd like to revisit the week-long vibe coding endeavor.</p>
+			<h3>Reflections on Vibe Coding</h3>
+			<p>None of these existed prior to the Biohackathon, and it was somewhat satisfying trying to vibe code all the way to this stage. It's worth noting that I did put in a lot of hours in trying to guide the LLM coding agents (I used a mixture of Gemini, Claude and Codex), and it wasn't a pure "type in what I want and get it" level of ease. There was a certain amount of effort required to actually get what you want, and if the LLM doesn't one-shot something, it can take quite a bit of back-and-forth, and switching of models, in order to achieve what you want. While I had a certain amount of experience prior to LLM coding agents entering the scene, and I'm certain my coding skills (or at least writing code to produce software skills) are above average, I do not believe someone who has little-to-no experience in coding would be able to replicate my efforts. There were many places that you could still get stuck, and which required manual input in order to push the LLM towards a solution.</p>
+			<p>I believe LLM coding agents have come a long way, but they still have a long way to go if we were to expect someone like my mom to be able to produce working software on her own. At the current stage, they're certainly a productivity multiplier for someone who already has experience in coding, whilst perhaps just a useful tool to "get started" for novice coders. And I do note productivity multiplier with a huge asterisk, they're not a <strong>guaranteed</strong> multiplier as something deterministic like a compiler would be, but with the right mindset and level of experience, they certainly are helpful.</p>
+			<p>It is also very important to be aware, or properly understand what the LLM did/achieve whilst moving forward with various tasks, as it can be very easy to just sit back and chill, and becoming detached from the work while the LLM produces lines after lines of code. While working late at night, my son would sometimes wake up crying, and I would have to step away to give him milk and put him back to bed. By the time I returned to my desk, the LLM had produced quite a bit of code, and I felt totally detached from what was done. I then had to have several back-and-forth with the LLM to regain a full picture of what was done, and in that sense it's good that LLMs are infinitely patient, at least to the extent of their context limits.</p>
+			<p>All in all, this Biohackathon experience has lead me to already integrate LLM assistance into my day-to-day work, and perhaps someday I would write up more about how I did the vibe coding for NERVE. There are several things that can help (like having tests and committing often), and some LLMs are better at following instructions, explaining or doing the implementation than others.</p>
+			<p>LLM coding agents don't seem to be a win-for-all at this stage just yet, though the consensus has been that Claude Opus 4.5 is currently the best coding agent, I feel there are some tasks that Claude falls short that I will reach out to Codex or Gemini for. Please do let me know if there are interest in me writing more about this topic.</p>
+			<p>In the meantime, if you're interested in checking out the end product, you can go to the following:</p>
+			<p><a href="https://nerve.yinjunphua.com" target="_blank">https://nerve.yinjunphua.com (Live Demo)</a> (Use biohack/2025 for username/password)</p>
+			<p><a href="https://github.com/phuayj/biohackathon-germany-2025" rel="nofollow" target="_blank">Github Repo: phuayj/biohackathon-germany-2025</a></p>
+		</div>
+		<hr />
+		<p class="text-grey text-center">Have comments or want to have discussions about the contents of this post? You can always contact me by email.</p>
+		<p><a href="/">&laquo; Back to home</a></p>
+	</div>
+
+	<footer class="text-center">
+		<p><a href="https://orcid.org/0000-0003-1178-8238" target="_blank">ORCID</a> &bull; <a href="https://researchmap.jp/phuayj?lang=en" target="_blank">researchmap</a> &bull; <a href="https://dblp.org/pid/217/3830.html" target="_blank">dblp</a></p>
+		<p>You can contact me at phua<span class="replace"> [at] </span>comp.isct.ac.jp</p>
+		<h5>&copy; Yin Jun Phua</h5>
+	</footer>
+
+	<script type="text/javascript">
+		var selEl = (q) => document.querySelectorAll(q);
+		document.addEventListener('DOMContentLoaded', function(e) {
+			selEl('.replace').forEach(el => {
+				el.innerHTML = '&#x40;';
+			});
+		});
+	</script>
+</body>
+</html>
