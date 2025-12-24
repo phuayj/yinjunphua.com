@@ -34,96 +34,23 @@ navRightLabel: "My Research"
 <h3>Goal</h3>
 <p class="text-grey">My main focus is on bridging the gap between symbolic AI and neural networks, combining the strengths of both approaches to create more <strong class="text-dark">robust</strong> and <strong class="text-dark">flexible</strong> intelligent systems.</p>
 <h3>Main Publications</h3>
+{% for pub in publications.en %}
 <p>
-  <a target="_blank" href="https://arxiv.org/abs/2408.10709">Variable Assignment Invariant Neural Networks for Learning Logic Programs</a><br>
-  <strong>Yin Jun Phua</strong>, Katsumi Inoue<br>
-  <span class="text-grey">18th International Conference on Neural-Symbolic Learning and Reasoning, 2024.</span>
+  <a target="_blank" href="{{ pub.url }}">{{ pub.title }}</a>{% if pub.note %} {{ pub.note }}{% endif %}<br>
+  {{ pub.authors | safe }}<br>
+  <span class="text-grey">{{ pub.venue }}</span>
 </p>
-<p>
-  <a target="_blank" href="https://openaccess.thecvf.com/content/ICCV2023W/VCL/html/Jodelet_Class-Incremental_Learning_Using_Diffusion_Model_for_Distillation_and_Replay_ICCVW_2023_paper.html">Class-Incremental Learning using Diffusion Model for Distillation and Replay</a> [Best Paper Award]<br>
-  Quentin Jodelet, Xin Liu, <strong>Yin Jun Phua</strong>, Tsuyoshi Murata<br>
-  <span class="text-grey">1st Workshop on Visual Continual Learning, ICCV2023, 2023.</span>
-</p>
-<p>
-  <a target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9975353/">resVAE ensemble: Unsupervised identification of gene sets in multi-modal single-cell sequencing data using deep ensembles</a><br>
-  Foo Wei Ten, Dong Sheng Yuan, Nabil Jabareen, <strong>Yin Jun Phua</strong>, Richard Eils, Soeren Lukassen, Christian Conrad<br>
-  <span class="text-grey">Frontiers in Cell and Developmental Biology 11, 2023.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/conf/ilp/PhuaI21">Learning Logic Programs Using Neural Networks by Exploiting Symbolic Invariance</a><br>
-  <strong>Yin Jun Phua</strong>, Katsumi Inoue<br>
-  <span class="text-grey">ILP, 203-218, 2021.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/conf/ilp/PhuaI19">Learning Logic Programs from Noisy State Transition Data</a> [Best Student Paper Award]<br>
-  <strong>Yin Jun Phua</strong>, Katsumi Inoue<br>
-  <span class="text-grey">Inductive Logic Programming - 29th International Conference(ILP), JSAI2019 72-80, 2019.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/journals/flap/PhuaRI19">Learning Representation of Relational Dynamics with Delays and Refining with Prior Knowledge</a><br>
-  <strong>Yin Jun Phua</strong>, Tony Ribeiro, Katsumi Inoue<br>
-  <span class="text-grey">IfCoLog Journal of Logics and their Applications(FLAP), 6(4) 695-708, 2019.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/conf/ilp/PhuaI19">Learning Logic Program Representation for Delayed Systems With Limited Training Data</a><br>
-  <strong>Yin Jun Phua</strong>, Tony Ribeiro, Sophie Tourret, Katsumi Inoue<br>
-  <span class="text-grey">Late Breaking Papers of the 27th International Conference on Inductive Logic Programming, 27-37, 2017.</span>
-</p>
+{% endfor %}
 <h3>Research Projects/Grants</h3>
+{% for proj in projects.en %}
 <p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-25K21269/">Developing AI Systems through Data-driven Learning of Generalized Interpretable Knowledge from Background Knowledge and Limited Data</a><br>
-  <strong>Principal Investigator</strong> <small class="text-grey">￥ 4,680,000</small><br>
-  Grant-in-Aid for Early-Career Scientists,<br>
-  Japan Society for the Promotion of Science<br>
-  <span class="text-grey">April 2025 - March 2027</span>
+  <a target="_blank" href="{{ proj.url }}">{{ proj.title }}</a><br>
+  <strong>{{ proj.role }}</strong> <small class="text-grey">{{ proj.amount }}</small><br>
+  {{ proj.program }},<br>
+  {{ proj.sponsor }}<br>
+  <span class="text-grey">{{ proj.span }}</span>
 </p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-25K03190/">Constraint Reasoning for Trustworthy AI</a><br>
-  Co-Investigator <small class="text-grey">￥ 18,720,000</small><br>
-  Grant-in-Aid for Scientific Research (B),<br>
-  Japan Society for the Promotion of Science<br>
-  <span class="text-grey">April 2025 - March 2028</span>
-</p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-22K21302">Discovering New Knowledge by Combining Symbolic Logic and Deep Learning</a><br>
-  <strong>Principal Investigator</strong> <small class="text-grey">￥ 2,860,000</small><br>
-  Grants-in-Aid for Scientific Research Grant-in-Aid for Research Activity Start-up,<br>Japan Society for the Promotion of Science<br>
-  <span class="text-grey">August 2022 - March 2024</span>
-</p>
-<p>
-  <a href="https://www.nii.ac.jp/research/upload/2024NIIkobogatakyodokenkyusaitakuitiran.pdf" target="_blank">Towards Reliable Generative AI by Logical Reasoning</a><br>
-  <strong>Principal Investigator</strong> <small class="text-grey">￥ 975,000</small><br>
-  Open Collaborative Research<br>
-  National Institute of Informatics<br>
-  <span class="text-grey">July 2024 - March 2025</span>
-</p>
-<p>
-  <a target="_blank" href="https://www.iir.titech.ac.jp/ofr/en/academy3_2023.html">Research on Intelligence and Consciousness</a><br>
-  <strong>Principal Investigator</strong> <small class="text-grey">￥ 950,000</small><br>
-  New Research Challenge Incentive Fund,<br>
-  Organization for Fundamental Research, Tokyo Institute of Technology<br>
-  <span class="text-grey">September 2023 - March 2025</span>
-</p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-22K21302">Discovering New Knowledge by Combining Symbolic Logic and Deep Learning</a><br>
-  <strong>Principal Investigator</strong> <small class="text-grey">￥ 2,860,000</small><br>
-  Grants-in-Aid for Scientific Research Grant-in-Aid for Research Activity Start-up,<br>Japan Society for the Promotion of Science<br>
-  <span class="text-grey">August 2022 - March 2024</span>
-</p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-21H04905">Robust AI by Integration of Knowledge Representation and Machine Learning</a><br>
-  Co-Investigator <small class="text-grey">￥ 41,470,000</small><br>
-  Grant-in-Aid for Scientific Research (A),<br>
-  Japan Society for the Promotion of Science<br>
-  <span class="text-grey">April 2022 - March 2025</span>
-
-</p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/grant/KAKENHI-PROJECT-21J14367">Understandable Model by Combination of Symbolic Machine Learning and Deep Statistical Learning</a><br>
-  Research Fellow <small class="text-grey">￥ 1,500,000</small><br>
-  Grants-in-Aid for Scientific Research Grant-in-Aid for JSPS Fellows,<br>Japan Society for the Promotion of Science<br>
-  <span class="text-grey">April 2021 - March 2022</span>
-</p>
+{% endfor %}
 <div class="row">
   <div class="col-12">
     <h3>Invited Talks</h3>

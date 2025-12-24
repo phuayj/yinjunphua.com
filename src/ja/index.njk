@@ -35,92 +35,23 @@ addJaStyles: true
 <h3>目標</h3>
 <p class="text-grey">私の研究テーマはシンボリックAIおよびニューラルネットワークを融合する技術を開発し，両手法の強みを生かしより<span class="text-dark"><strong>頑健</strong>且つ<strong>フレキシブル</strong>な知的システムを構築する</span>ことです．</p>
 <h3>業績</h3>
+{% for pub in publications.ja %}
 <p>
-  <a target="_blank" href="https://arxiv.org/abs/2408.10709">Variable Assignment Invariant Neural Networks for Learning Logic Programs</a><br>
-  <strong>Yin Jun Phua</strong>, Katsumi Inoue<br>
-  <span class="text-grey">18th International Conference on Neural-Symbolic Learning and Reasoning, 2024.</span>
+  <a target="_blank" href="{{ pub.url }}">{{ pub.title }}</a>{% if pub.note %} {{ pub.note }}{% endif %}<br>
+  {{ pub.authors | safe }}<br>
+  <span class="text-grey">{{ pub.venue }}</span>
 </p>
-<p>
-  <a target="_blank" href="https://openaccess.thecvf.com/content/ICCV2023W/VCL/html/Jodelet_Class-Incremental_Learning_Using_Diffusion_Model_for_Distillation_and_Replay_ICCVW_2023_paper.html">Class-Incremental Learning using Diffusion Model for Distillation and Replay</a> [最優秀論文賞]<br>
-  Quentin Jodelet, Xin Liu, <strong>Yin Jun Phua</strong>, Tsuyoshi Murata<br>
-  <span class="text-grey">1st Workshop on Visual Continual Learning, ICCV2023, 2023.</span>
-</p>
-<p>
-  <a target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9975353/">resVAE ensemble: Unsupervised identification of gene sets in multi-modal single-cell sequencing data using deep ensembles</a><br>
-  Foo Wei Ten, Dong Sheng Yuan, Nabil Jabareen, <strong>Yin Jun Phua</strong>, Richard Eils, Soeren Lukassen, Christian Conrad<br>
-  <span class="text-grey">Frontiers in Cell and Developmental Biology 11, 2023.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/conf/ilp/PhuaI21">Learning Logic Programs Using Neural Networks by Exploiting Symbolic Invariance</a><br>
-  <strong>Yin Jun Phua</strong>, Katsumi Inoue<br>
-  <span class="text-grey">ILP, 203-218, 2021.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/conf/ilp/PhuaI19">Learning Logic Programs from Noisy State Transition Data</a> [最優秀学生論文賞]<br>
-  <strong>Yin Jun Phua</strong>, Katsumi Inoue<br>
-  <span class="text-grey">Inductive Logic Programming - 29th International Conference(ILP), JSAI2019 72-80, 2019.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/journals/flap/PhuaRI19">Learning Representation of Relational Dynamics with Delays and Refining with Prior Knowledge</a><br>
-  <strong>Yin Jun Phua</strong>, Tony Ribeiro, Katsumi Inoue<br>
-  <span class="text-grey">IfCoLog Journal of Logics and their Applications(FLAP), 6(4) 695-708, 2019.</span>
-</p>
-<p>
-  <a target="_blank" href="https://dblp.org/rec/conf/ilp/PhuaI19">Learning Logic Program Representation for Delayed Systems With Limited Training Data</a><br>
-  <strong>Yin Jun Phua</strong>, Tony Ribeiro, Sophie Tourret, Katsumi Inoue<br>
-  <span class="text-grey">Late Breaking Papers of the 27th International Conference on Inductive Logic Programming, 27-37, 2017.</span>
-</p>
+{% endfor %}
 <h3>競争的資金・共同研究</h3>
+{% for proj in projects.ja %}
 <p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/ja/grant/KAKENHI-PROJECT-25K21269/">背景知識と少量のデータから汎用的で解釈可能な知識をデータ駆動で学習するAIの開発</a><br>
-  <strong>代表</strong> <small class="text-grey">￥ 4,680,000</small><br>
-  科学研究費助成事業 若手研究<br>
-  日本学術振興会<br>
-  <span class="text-grey">2025年4月 - 2027年3月</span>
+  <a target="_blank" href="{{ proj.url }}">{{ proj.title }}</a><br>
+  <strong>{{ proj.role }}</strong> <small class="text-grey">{{ proj.amount }}</small><br>
+  {{ proj.program }}<br>
+  {{ proj.sponsor }}<br>
+  <span class="text-grey">{{ proj.span }}</span>
 </p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/ja/grant/KAKENHI-PROJECT-25K03190/">信頼されるAIに向けた制約推論</a><br>
-  分担 <small class="text-grey">￥ 18,720,000</small><br>
-  科学研究費助成事業 基盤研究(B)<br>
-  日本学術振興会<br>
-  <span class="text-grey">2025年4月 - 2028年3月</span>
-</p>
-<p>
-  <a href="https://www.nii.ac.jp/research/upload/2024NIIkobogatakyodokenkyusaitakuitiran.pdf" target="_blank">論理的推論が可能な「信頼できる生成AI」の実現</a><br>
-  <strong>代表</strong> <small class="text-grey">￥ 975,000</small><br>
-  公募型共同研究<br>
-  国立情報学研究所<br>
-  <span class="text-grey">2024年7月 - 2025年3月</span>
-</p>
-<p>
-  <a href="https://www.iir.titech.ac.jp/ofr/academy3_2023.html" target="_blank">知能や意識についての研究</a><br>
-  <strong>代表</strong> <small class="text-grey">￥ 500,000</small><br>
-  新研究挑戦奨励金<br>
-  基礎研究機構　東京工業大学<br>
-  <span class="text-grey">2023年9月 - 2024年3月</span>
-</p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/grant/KAKENHI-PROJECT-22K21302">記号論理と深層機械学習の統合による新たな知識を発見するAIに関する研究</a><br>
-  <strong>代表</strong> <small class="text-grey">￥ 2,860,000</small><br>
-  科学研究費助成事業 研究活動スタート支援<br>
-  日本学術振興会<br>
-  <span class="text-grey">2022年8月 - 2024年3月</span>
-</p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/grant/KAKENHI-PROJECT-21H04905">知識表現・推論と機械学習の統合によるロバストAIの実現 </a><br>
-  分担 <small class="text-grey">￥ 41,470,000</small><br>
-  科学研究費助成事業 基盤研究(A)<br>
-  日本学術振興会<br>
-  <span class="text-grey">2022年4月 - 2025年3月</span>
-
-</p>
-<p>
-  <a target="_blank" href="https://kaken.nii.ac.jp/ja/grant/KAKENHI-PROJECT-21J14367">記号論理機械学習と深層機械学習の融合による理解可能なモデルを構築する研究</a><br>
-  特別研究員 <small class="text-grey">￥ 1,500,000</small><br>
-  科学研究費助成事業 特別研究員奨励費<br>
-  日本学術振興会<br>
-  <span class="text-grey">2021年4月 - 2022年3月</span>
-</p>
+{% endfor %}
 <div class="row">
   <div class="col-12">
     <h3>招待講演</h3>
