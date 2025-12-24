@@ -1,0 +1,45 @@
+---
+layout: layouts/thought.njk
+title: "Explainability Might not be All You Need | Thoughts | Yin Jun, Phua -- Assistant Professor at Tokyo Tech"
+heading: "Explainability Might not be All You Need"
+lang: en
+description: "Yin Jun Phua, currently an assistant professor at Tokyo Institute of Technology. Main research focus is on bridging the gap between symbolic AI and neural networks."
+permalink: "/thoughts/2023-11-08-explainability-might-not-be-all-you-need.html"
+date: 2023-11-08
+tags:
+  - thoughts
+ogType: article
+ogTitle: "Explainability Might not be All You Need"
+---
+{% block lead %}
+<div class="row">
+  <div class="col-8">
+    <picture>
+      <source srcset="/images/explainable-ai-not-all-you-need.webp" type="image/webp">
+      <source srcset="/images/explainable-ai-not-all-you-need.png" type="image/png">
+      <img src="/images/explainable-ai-not-all-you-need.png" alt="Explainable AI alone is still not as effective as well-trained domestic animals.">
+    </picture>
+    <p class="text-dark"><small>Explainable AI alone is still not as effective as well-trained domestic animals.</small></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block post %}
+<p>Statistical machine learning models, including deep learning models, have demonstrated exceptional performance in various applications. Nevertheless, both critics and advocates concur on one weekness: that the inner workings of the model are opaque.</p>
+<p>AI experts, especially those who experienced the second AI boom, advocate for the need of interpretability &mdash; the capacity to examine, comprehend, and adjust the model as needed. This perspective stems from the era of GOFAI (Good Old Fashioned AI), where models were primarily symbolic and can be thoroughly inspected by human experts.</p>
+<p>Advocates of the more recently developed, superior deep learning models often dimiss the notion that interpretability is essential. They argue that if a model achieves sufficient accuracy, there is no need for interpretability.</p>
+<p>Indeed, they would have a point if it were possible for a model to achieve 100% accuracy in real-world scenarios. If a model were infallible, there would be no need to modify or inspect its mechanisms.</p>
+<p>Regrettably, with the technology we possess today, crafting a model that attains such perfect accuracy is improbable, particularly in a constantly evolving world. Therefore, acknowledging that our models will inevitably err to a significant degree, it becomes critical to comprehend when and how they might fail.</p>
+<p>While interpretability is valuable, on its own, it's not enough. To construct a model capable of handling complex real-world situations, a highly intricate model is required. A dense symbolic model comprised of thousands, or even hundreds of thousands, of rules is just as impenetrable as a statistical model with numerous floating-point numbers. In both cases, the complexity renders them inscrutable to human understanding.</p>
+<p>Enter the realm of explainable AI (XAI). Advocates of XAI argue that, by having a model that can be explained, rather than insisting on a comprehensible symbolic model from the start, we can enjoy the high performance of a black box deep learning model with gaining insights into its predictions. To achieve this, they suggest using sophisticated techniques to extract explanations from "black box" deep learning models for specific predictions.</p>
+<p>Nonetheless, this approach is not without its challenges. The first issue is that most explainability techniques are applied to individual predictions, failing to shed light on the model's behavior for other instances. Second, since these techniques are usually implemented in addition to the model, there's no assurance that the explanations given are truly reflective of the model's decision-making process. Lastly, while these techniques aim to generate "explanations," they often overlook the crucial aspect of whether the end user can comprehend these explanations.</p>
+<p>The central question, then, is whether explainability is truly necessary? At first glance, this might echo the critique made by opponents of interpretability. One might be inclined to believe that, if AI models can reach sufficiently high levels of accuracy the need for explainability diminishes. Until such accuracy is achievable, however, explainability is essential because interpretability alone falls short. Unfortunately, this misses the crux of the matter.</p>
+<p>The issue with opaque, black box deep learning models is their propensity to fail in unexpected, sometimes inexplicable ways. Offering explanations for their predictions is one strategy to address this problem, but it's not the sole solution. Other avenues also exist to mitigate these unpredictable failures and enhance the trustworthiness of AI systems.</p>
+<p>The reason why unpredictable failures in AI models are so unwelcome stems from the fact that we intend to use these models as tools &mdash; to delegate certain tasks to them. With such delegation, responsibility for any failure ultimately rests with the person who assigned the task. The inability to account for or explain how a failure occurred is, therefore, highly problematic, as it challenges the very principles of accountability and trust that are essential when humans rely on AI in various applications.</p>
+<p>When considering task delegation to non-human agents such as a shepherd dog, it's worth noting that we don't have interpretability nor explainability of a dog's cognitive processes, yet we have confidently entrusted it with sheep herding for centuries without major issues. (The argument could be made that a dog's failure to herd sheep is unlikely to result in catastrophic consequences, however, the point still stands.) Similarly, we have once delegated transportation to horses, for several centuries.</p>
+<p>The foundational trust in delegating tasks to a trained shepherd dog lies in our understanding of its predictable behavior; we recognize that a well-trained dog is unlikely to break certain rules, such as putting its owner's life at risk. Additionally, we trust that the dog can adapt to various conditions like different weathers and lighting, even if it hasn't been explicitly trained for those specific environments. This level of adaptable predictability has not yet been achieved by current AI technologies.</p>
+<p>Hence, one could make the case that if a model's behavior is sufficiently predictable, especially in extreme situations, the need for explainability or interpretability might become less pressing. So, what would it take to achieve this level of predictability? Intuitively, we might assume that knowing all the decision boundaries of a model would enable us to predict its responses in every scenario. This is true in theory. Yet, although feasible for straightforward problems, obtaining the decision boundaries for highly complex issues and intricate models is exceptionally challenging due to the sheer number of possibilities to consider.</p>
+<p>Another possible approach is to develop a model that aligns closely with human common sense, allowing us to predict its behavior in various situations. Yet, even among humans, common sense can differ greatly, sometimes leading to conflicts. This raises a difficult question: How do we establish a definitive set of common sense principles for a deep learning model?</p>
+<p>Moreover, this concept doesn't account for scenarios where corrective action is necessary. Just as shepherd dogs or humans can make errors and learn from them to prevent future occurrences, we similarly need to be able to refine our AI models. If a model lacks transparency, the challenge then becomes how to adjust it while preserving its effective aspects and improving or eliminating the faulty ones.</p>
+<p>I don't claim to have solutions for all these problems. Aside from a handful of countries, the world is on a path toward population decline. Services we've taken for granted are suffering from a shortfall in labor, and some skills or knowledge may already be vanishing. The urgency for intelligent systems to take over some tasks has never been greater. Addressing the issues mentioned above is thus crucial to tackling the global challenges we currently face.</p>
+{% endblock %}

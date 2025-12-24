@@ -1,0 +1,28 @@
+---
+layout: layouts/thought.njk
+title: "Bhyve CPU Lockup Issue | Thoughts | Yin Jun, Phua -- Assistant Professor at Tokyo Tech"
+heading: "Bhyve CPU Lockup Issue"
+lang: en
+description: "Yin Jun Phua, currently an assistant professor at Tokyo Institute of Technology. Main research focus is on bridging the gap between symbolic AI and neural networks."
+permalink: "/thoughts/2023-10-11-bhyve-cpu-lockup-issue.html"
+date: 2023-10-11
+tags:
+  - thoughts
+---
+{% block post %}
+<p>I was setting up our lab server infrastructure, and I've deployed several VMs on bhyve on FreeBSD for some miscellaneous services. But some of the Linux VMs (both Debian and Rocky Linux) were sometimes locking up. The Debian VM that was locking up would show messages such as:</p>
+<pre>NMI watchdog: BUG: soft lockup - CPU#0 stuck for 23s! [kworker/0:0:5]</pre>
+<p>For the Rocky Linux VM, it showed a different message starting with the clock source:</p>
+<pre>clocksource: timekeeping watchdog on CPU2: Marking clocksource 'tsc' as unstable because the skew is too large</pre>
+<p>The Debian VMs were seemingly using hpet as the clocksource so after it switched the clocksource I thought it would stabilize. However, the Rocky Linux VM would then freeze up and some watchdog messages would show up:</p>
+<pre>systemd[1]: systemd-journald.service: Main process exited, code=killed, status=6/ABRT
+systemd[1]: systemd-journald.service: Failed with result 'watchdog'.
+systemd[1]: systemd-journald.service: Watchdog timeout (limit 3min)!
+systemd[1]: systemd-journald.service: Killing process 840 (systemd-journal) with signal SIGABRT.</pre>
+<p>The VM would freeze up and no progress seems to be made for any process on the VM. When I look at the host however, it was running just fine. Some search around the internet revealed that this can be caused by oversaturating the CPU on the host. However, this was a dual CPU server with 48 cores each. There was no way I was overallocating the CPU.</p>
+<p>Some threads suggested that it might be a Linux kernel issue that could be fixed with an update. However, all of the VMs were freshly installed and have the latest kernel. Moreover, some of the VMs were running fine whereas other VMs which had this issue would freeze up every few hours.</p>
+<p>It was a total puzzle and I thought I had no hopes of getting this fixed, until when I was installing Gitlab today, the same issue happened. I searched a bit further today, and found that it was possible for Linux to hang when there were insufficient entropy to generate pseudorandom numbers. This lead me to think that it might be possible that the VMs were somehow not getting enough entropy, and so I looked at the vm-bhyve configuration and found a <a href="https://github.com/churchers/vm-bhyve/blob/v1.5.0/sample-templates/config.sample#L331C15-L331C15" target="_blank">line to configure the random device</a>. Changing it to the following line:</p>
+<pre>virt_random="yes"</pre>
+<p>Allowed me to complete the Gitlab installation. I can't reboot the other VMs to apply this configuration change immediately to verify the fix, but I'm fairly confident now that the other VMs were also hanging should be fixed. It might be the case that bhyve was not supplying sufficient entropy from the Linux kernel's perspective, and I'm unsure if this would be a bug in bhyve but hopefully this would help someone else solve their issue as well.</p>
+<p><i>Update (Oct 15, 2023)</i>: I have managed to reboot the other VMs to apply the changes, and I can now confirm that I haven't been able to reproduce the issue after having the VM running for about 24 hours, whereas prior to the configuration change, the VMs will lockup 4~5 hours after they come up. So while I haven't actually root caused it, I can say with high confidence that it was the entropy that was the issue.</p>
+{% endblock %}

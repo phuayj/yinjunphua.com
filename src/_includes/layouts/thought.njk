@@ -1,0 +1,55 @@
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="pull-right">
+        {% if lang == 'ja' %}
+        <a href="/">EN</a> | 日本語
+        {% else %}
+        EN | <a href="/ja/">日本語</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% if lang == 'ja' %}
+  {% set homeUrl = '/ja/' %}
+  {% set researchUrl = '/ja/my-research.html' %}
+  {% set defaultTitle = 'ポア　インジュン' %}
+  {% set defaultSubtitle = 'メモ帳' %}
+  {% set researchLabel = '私の研究' %}
+  {% set postCta = 'この内容についてもっと知りたい場合はいつでもメールで連絡ください。' %}
+  {% set backLabel = '戻る' %}
+  {% else %}
+  {% set homeUrl = '/' %}
+  {% set researchUrl = '/my-research.html' %}
+  {% set defaultTitle = 'Yin Jun, Phua' %}
+  {% set defaultSubtitle = 'Thoughts' %}
+  {% set researchLabel = 'My Research' %}
+  {% set postCta = 'Have comments or want to have discussions about the contents of this post? You can always contact me by email.' %}
+  {% set backLabel = 'Back to home' %}
+  {% endif %}
+  <nav class="nav">
+    <div class="nav-left">
+      <a href="{{ homeUrl }}" class="is-paddingless"><h2 class="is-marginless">{{ navTitle or defaultTitle }} <small>&mdash; {{ navSubtitle or defaultSubtitle }}</small></h2></a>
+    </div>
+    <div class="nav-right">
+      <a href="{{ researchUrl }}">{{ researchLabel }}</a>
+    </div>
+  </nav>
+  <hr>
+  <h1>{{ heading or title }}</h1>
+  {% if date and not hideDate %}
+    {% if lang == 'ja' %}
+  <p class="text-grey"><small>{{ date | readableDateJa }}</small></p>
+    {% else %}
+  <p class="text-grey"><small>Published on {{ date | readableDateLong }}</small></p>
+    {% endif %}
+  {% endif %}
+  {{ content | safe }}
+  <hr />
+  <p class="text-grey text-center">{{ postCta }}</p>
+  <p><a href="{{ homeUrl }}">&laquo; {{ backLabel }}</a></p>
+</div>
+{% endblock %}

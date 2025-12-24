@@ -1,0 +1,16 @@
+{
+  "url": "https://yinjunphua.com",
+  "descriptionEn": "Yin Jun Phua, currently an assistant professor at Institute of Science Tokyo. Main research focus is on bridging the gap between symbolic AI and neural networks.",
+  "descriptionJa": "ポア　インジュン，現在東京科学大学にて助教をしています．研究テーマはシンボリックAIおよびニューラルネットワークの融合です．",
+  "umamiWebsiteId": "553526c2-8bba-4565-af3b-38ce4c9e4002",
+  "links": {
+    "orcid": "https://orcid.org/0000-0003-1178-8238",
+    "researchmap": {
+      "en": "https://researchmap.jp/phuayj?lang=en",
+      "ja": "https://researchmap.jp/phuayj?lang=ja"
+    },
+    "dblp": "https://dblp.org/pid/217/3830.html",
+    "github": "https://github.com/phuayj"
+  },
+  "emailObfuscated": "phua<span class=\"replace\"> [at] </span>comp.isct.ac.jp"
+}

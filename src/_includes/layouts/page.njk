@@ -1,0 +1,31 @@
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="pull-right">
+        {% if lang == 'ja' %}
+        <a href="/">EN</a> | 日本語
+        {% else %}
+        EN | <a href="/ja/">日本語</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <nav class="nav">
+    <div class="nav-left">
+      {% if headingLink %}<a class="is-paddingless" href="{{ headingLink }}">{% endif %}
+      <{{ headingTag | default('h1') }} class="is-marginless">{{ headingText }}{% if headingSmall %} <small>&mdash; {{ headingSmall }}</small>{% endif %}</{{ headingTag | default('h1') }}>
+      {% if headingLink %}</a>{% endif %}
+    </div>
+    <div class="nav-right">
+      {% if navRightHref and navRightLabel %}
+      <a href="{{ navRightHref }}">{{ navRightLabel }}</a>
+      {% endif %}
+    </div>
+  </nav>
+  <hr>
+  {{ content | safe }}
+</div>
+{% endblock %}

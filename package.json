@@ -1,0 +1,27 @@
+{
+  "name": "yinjunphua.com",
+  "version": "1.0.0",
+  "description": "Eleventy build for yinjunphua.com",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve --watch",
+    "start": "npm run dev",
+    "test": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuayj/yinjunphua.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/phuayj/yinjunphua.com/issues"
+  },
+  "homepage": "https://github.com/phuayj/yinjunphua.com#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}

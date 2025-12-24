@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="{{ lang | default('en') }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ title }}</title>
+  {% if description %}
+  {% set pageDescription = description %}
+  {% elseif lang == 'ja' %}
+  {% set pageDescription = site.descriptionJa %}
+  {% else %}
+  {% set pageDescription = site.descriptionEn %}
+  {% endif %}
+  {% if pageDescription %}
+  <meta name="description" content="{{ pageDescription }}">
+  {% endif %}
+  <link rel="stylesheet" href="/css/chota.css">
+  <link rel="stylesheet" href="/css/style.css">
+  {% if addJaStyles %}
+  <link rel="stylesheet" href="/css/style_ja.css">
+  {% endif %}
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if alternates %}
+    {% for alt in alternates %}
+  <link rel="alternate" hreflang="{{ alt.hreflang }}" href="{{ alt.href }}">
+    {% endfor %}
+  {% endif %}
+  {% set canonicalUrl = canonical or site.url + page.url %}
+  {% if canonicalUrl %}
+  <link rel="canonical" href="{{ canonicalUrl }}">
+  {% endif %}
+  <meta http-equiv="content-language" content="{{ lang | default('en') }}">
+  {% if ogType %}
+  <meta property="og:type" content="{{ ogType }}">
+  {% endif %}
+  {% if ogTitle %}
+  <meta property="og:title" content="{{ ogTitle }}">
+  {% endif %}
+  {% if ogDescription %}
+  <meta property="og:description" content="{{ ogDescription }}">
+  {% endif %}
+  {% if ogImage %}
+  <meta property="og:image" content="{{ ogImage }}">
+  {% endif %}
+  {% if site.umamiWebsiteId %}
+  <script defer src="https://um.yinjunphua.com/script.js" data-website-id="{{ site.umamiWebsiteId }}"></script>
+  {% endif %}
+</head>
+<body>
+  {% block content %}{% endblock %}
+  {% if lang == 'ja' %}
+  {% set researchmapLink = site.links.researchmap.ja %}
+  {% else %}
+  {% set researchmapLink = site.links.researchmap.en %}
+  {% endif %}
+  {% set emailObfuscated = emailObfuscatedOverride or page.emailObfuscated or site.emailObfuscated %}
+  <footer class="text-center">
+    <p><a href="{{ site.links.orcid }}" target="_blank">ORCID</a> &bull; <a href="{{ researchmapLink }}" target="_blank">researchmap</a> &bull; <a href="{{ site.links.dblp }}" target="_blank">dblp</a> &bull; <a href="{{ site.links.github }}" target="_blank">Github</a></p>
+    <p>{% if lang == 'ja' %}メールの連絡は {{ emailObfuscated | safe }} まで{% else %}You can contact me at {{ emailObfuscated | safe }}{% endif %}</p>
+    <h5>&copy; Yin Jun Phua</h5>
+  </footer>
+  <script type="text/javascript">
+    var selEl = (q) => document.querySelectorAll(q);
+    document.addEventListener('DOMContentLoaded', function (e) {
+      selEl('.replace').forEach(el => {
+        el.innerHTML = '&#x40;';
+      });
+    });
+  </script>
+</body>
+</html>
