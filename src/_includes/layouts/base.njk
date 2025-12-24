@@ -50,7 +50,9 @@
   {% endif %}
 </head>
 <body>
-  {% block content %}{% endblock %}
+  {% block content %}
+  {{ content | safe }}
+  {% endblock %}
   {% if lang == 'ja' %}
   {% set researchmapLink = site.links.researchmap.ja %}
   {% else %}
