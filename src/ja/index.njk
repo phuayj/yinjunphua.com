@@ -253,9 +253,10 @@ addJaStyles: true
     <p>研究や教育に関して思うところ。主にひとりごと。</p>
     {% set japaneseThoughts = collections.thoughts | where("data.lang", "ja") | reverse %}
     {% for post in japaneseThoughts %}
+    {% set listTitle = post.data.heading or post.data.title %}
     <div class="row">
       <div class="col-2">{{ post.date | readableDateJa }}</div>
-      <div class="col-10"><a href="{{ post.url }}">{{ post.data.title }}</a></div>
+      <div class="col-10"><a href="{{ post.url }}">{{ listTitle }}</a></div>
     </div>
     {% endfor %}
   </div>

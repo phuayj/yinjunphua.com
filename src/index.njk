@@ -255,9 +255,10 @@ navRightLabel: "My Research"
     <p>Some of my personal notes, with regards to research or education.</p>
     {% set englishThoughts = collections.thoughts | where("data.lang", "en") | reverse %}
     {% for post in englishThoughts %}
+    {% set listTitle = post.data.heading or post.data.title %}
     <div class="row">
       <div class="col-2">{{ post.date | readableDate }}</div>
-      <div class="col-10"><a href="{{ post.url }}">{{ post.data.title }}</a></div>
+      <div class="col-10"><a href="{{ post.url }}">{{ listTitle }}</a></div>
     </div>
     {% endfor %}
   </div>
