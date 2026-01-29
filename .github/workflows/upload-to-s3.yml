@@ -11,6 +11,7 @@ permissions:
 env:
   AWS_REGION: ap-northeast-1
   S3_BUCKET: yinjunphua.com
+  CLOUDFRONT_DISTRIBUTION_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID || secrets.CLOUDFRONT_DISTRIBUTION_ID }}
 
 jobs:
   upload:
@@ -36,7 +37,30 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: arn:aws:iam::180964446480:role/github-yinjunphuacom-s3-upload
 
+      - name: Detect index.html change
+        id: index_change
+        run: |
+          set -euo pipefail
+          LOCAL_ETAG=$(md5sum _site/index.html | cut -d ' ' -f1)
+          REMOTE_ETAG=$(aws s3api head-object --bucket "${S3_BUCKET}" --key "index.html" --query ETag --output text 2>/dev/null || true)
+          REMOTE_ETAG=${REMOTE_ETAG//\"/}
+          if [ -z "$REMOTE_ETAG" ] || [ "$LOCAL_ETAG" != "$REMOTE_ETAG" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Sync site to S3
         run: |
           aws s3 sync _site "s3://${{ env.S3_BUCKET }}" --delete --exclude '.DS_Store' --exclude '*/.DS_Store' --cache-control "public,max-age=31536000,immutable" --exclude 'index.html' --exclude 'my-research.html' --exclude 'thoughts/*.html' --exclude 'ja/index.html' --exclude 'ja/my-research.html' --exclude 'ja/thoughts/*.html'
-          aws s3 sync _site "s3://${{ env.S3_BUCKET }}" --delete --exclude '.DS_Store' --exclude '*/.DS_Store' --exclude '*' --include 'index.html' --include 'my-research.html' --include 'thoughts/*.html' --include 'ja/index.html' --include 'ja/my-research.html' --include 'ja/thoughts/*.html'
+          aws s3 sync _site "s3://${{ env.S3_BUCKET }}" --delete --exclude '.DS_Store' --exclude '*/.DS_Store' --exclude '*' --include 'index.html' --cache-control "public,max-age=259200"
+          aws s3 sync _site "s3://${{ env.S3_BUCKET }}" --delete --exclude '.DS_Store' --exclude '*/.DS_Store' --exclude '*' --include 'my-research.html' --include 'thoughts/*.html' --include 'ja/index.html' --include 'ja/my-research.html' --include 'ja/thoughts/*.html'
+
+      - name: Invalidate CloudFront index
+        if: steps.index_change.outputs.changed == 'true'
+        run: |
+          if [ -z "${CLOUDFRONT_DISTRIBUTION_ID}" ]; then
+            echo "CLOUDFRONT_DISTRIBUTION_ID not set; skipping invalidation"
+            exit 0
+          fi
+          aws cloudfront create-invalidation --distribution-id "${CLOUDFRONT_DISTRIBUTION_ID}" --paths "/" "/index.html"
