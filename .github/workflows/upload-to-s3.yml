@@ -38,4 +38,5 @@ jobs:
 
       - name: Sync site to S3
         run: |
-          aws s3 sync _site "s3://${{ env.S3_BUCKET }}" --delete --exclude '.DS_Store' --exclude '*/.DS_Store'
+          aws s3 sync _site "s3://${{ env.S3_BUCKET }}" --delete --exclude '.DS_Store' --exclude '*/.DS_Store' --cache-control "public,max-age=31536000,immutable" --exclude 'index.html' --exclude 'my-research.html' --exclude 'thoughts/*.html' --exclude 'ja/index.html' --exclude 'ja/my-research.html' --exclude 'ja/thoughts/*.html'
+          aws s3 sync _site "s3://${{ env.S3_BUCKET }}" --delete --exclude '.DS_Store' --exclude '*/.DS_Store' --exclude '*' --include 'index.html' --include 'my-research.html' --include 'thoughts/*.html' --include 'ja/index.html' --include 'ja/my-research.html' --include 'ja/thoughts/*.html'
