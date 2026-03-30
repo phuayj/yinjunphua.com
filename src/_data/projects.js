@@ -7,7 +7,7 @@ module.exports = {
       amount: "￥ 4,680,000",
       program: "Grant-in-Aid for Early-Career Scientists",
       sponsor: "Japan Society for the Promotion of Science",
-      span: "April 2025 - March 2027",
+      span: "April 2025 - March 2028",
     },
     {
       title: "Constraint Reasoning for Trustworthy AI",
@@ -16,7 +16,7 @@ module.exports = {
       amount: "￥ 18,720,000",
       program: "Grant-in-Aid for Scientific Research (B)",
       sponsor: "Japan Society for the Promotion of Science",
-      span: "April 2025 - March 2028",
+      span: "April 2025 - March 2029",
     },
     {
       title: "Discovering New Knowledge by Combining Symbolic Logic and Deep Learning",
@@ -72,7 +72,7 @@ module.exports = {
       amount: "￥ 4,680,000",
       program: "科学研究費助成事業 若手研究",
       sponsor: "日本学術振興会",
-      span: "2025年4月 - 2027年3月",
+      span: "2025年4月 - 2028年3月",
     },
     {
       title: "信頼されるAIに向けた制約推論",
@@ -81,7 +81,7 @@ module.exports = {
       amount: "￥ 18,720,000",
       program: "科学研究費助成事業 基盤研究(B)",
       sponsor: "日本学術振興会",
-      span: "2025年4月 - 2028年3月",
+      span: "2025年4月 - 2029年3月",
     },
     {
       title: "記号論理と深層機械学習の統合による新たな知識を発見するAIに関する研究",
@@ -105,10 +105,10 @@ module.exports = {
       title: "知能や意識についての研究",
       url: "https://www.iir.titech.ac.jp/ofr/academy3_2023.html",
       role: "代表",
-      amount: "￥ 500,000",
+      amount: "￥ 950,000",
       program: "新研究挑戦奨励金",
       sponsor: "基礎研究機構　東京工業大学",
-      span: "2023年9月 - 2024年3月",
+      span: "2023年9月 - 2025年3月",
     },
     {
       title: "知識表現・推論と機械学習の統合によるロバストAIの実現",
