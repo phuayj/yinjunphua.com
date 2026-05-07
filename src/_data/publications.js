@@ -1,6 +1,12 @@
 module.exports = {
   en: [
     {
+      title: "A Foundation Model for Zero-Shot Logical Rule Induction",
+      url: "https://yinjunphua.com/papers/nri/",
+      authors: "<strong>Yin Jun Phua</strong>",
+      venue: "35th International Joint Conference on Artificial Intelligence IJCAI, 2026."
+    },
+    {
       title: "Variable Assignment Invariant Neural Networks for Learning Logic Programs",
       url: "https://arxiv.org/abs/2408.10709",
       authors: "<strong>Yin Jun Phua</strong>, Katsumi Inoue",
@@ -45,7 +51,14 @@ module.exports = {
       venue: "Late Breaking Papers of the 27th International Conference on Inductive Logic Programming, 27-37, 2017.",
     },
   ],
+
   ja: [
+    {
+      title: "A Foundation Model for Zero-Shot Logical Rule Induction",
+      url: "https://yinjunphua.com/papers/nri/",
+      authors: "<strong>Yin Jun Phua</strong>",
+      venue: "35th International Joint Conference on Artificial Intelligence IJCAI, 2026."
+    },
     {
       title: "Variable Assignment Invariant Neural Networks for Learning Logic Programs",
       url: "https://arxiv.org/abs/2408.10709",
