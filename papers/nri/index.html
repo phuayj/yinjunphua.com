@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NRI: A Foundation Model for Zero-Shot Logical Rule Induction (IJCAI 2026)</title>
+<meta name="description" content="Neural Rule Inducer (NRI): a pretrained foundation model that performs zero-shot logical rule induction on new domains without retraining. Accepted at IJCAI 2026.">
+<meta property="og:title" content="A Foundation Model for Zero-Shot Logical Rule Induction (IJCAI 2026)">
+<meta property="og:description" content="Neural Rule Inducer (NRI): a pretrained model that performs zero-shot logical rule induction on new domains without retraining.">
+<meta property="og:image" content="https://yinjunphua.com/papers/nri/assets/pipeline.png">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Favicon intentionally omitted: defers to the site-root favicon of the host domain -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Hind: Science Tokyo design system Latin font; Noto Sans JP: Science Tokyo design system JP font -->
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+  /* ============================================================
+     Science Tokyo Design System tokens
+     Source: https://design-system.adm.isct.ac.jp/
+     ============================================================ */
+  :root {
+    /* Brand semantic */
+    --brand-primary:    #1c3177; /* navy 900 - primary brand */
+    --brand-secondary:  #7f96c2; /* navy 500 */
+    --brand-tertiary:   #cfdbed; /* navy 200 - badges */
+    --brand-quaternary: #f9fbff; /* navy 50  - section tint */
+
+    /* Classified Indigo (used for accents/links) */
+    --indigo-primary:   #0031d8;
+    --indigo-secondary: #00019c;
+    --indigo-tertiary:  #f5f9ff;
+    --indigo-quaternary:#dceafe;
+
+    /* Mono (text + structure) */
+    --mono-primary:    #1a1a1a; /* body text */
+    --mono-secondary:  #767676; /* mute */
+    --mono-tertiary:   #cccccc;
+    --mono-quaternary: #ebebeb; /* border */
+    --mono-quinary:    #fafafa; /* soft bg */
+
+    /* Functional */
+    --green-primary: #2c9a4a;     /* success / wins */
+    --green-quaternary: #f4feee;
+
+    /* Aliases used in this stylesheet */
+    --fg: var(--mono-primary);
+    --fg-soft: #4a4a4a;
+    --fg-mute: var(--mono-secondary);
+    --bg: #ffffff;
+    --bg-soft: var(--mono-quinary);
+    --bg-card: #ffffff;
+    --bg-tint: var(--brand-quaternary);
+    --border: var(--mono-quaternary);
+    --border-strong: var(--mono-tertiary);
+    --accent: var(--brand-primary);
+    --accent-strong: var(--indigo-primary);
+    --accent-soft: var(--brand-tertiary);
+    --accent-softer: var(--indigo-tertiary);
+    --good: var(--green-primary);
+    --good-soft: var(--green-quaternary);
+    --code-bg: var(--mono-quinary);
+
+    /* Corner radius (from Science Tokyo design system, normalized) */
+    --r-sm: 4px;
+    --r-md: 8px;
+    --r-lg: 12px;
+    --r-pill: 999px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    /* Hind for Latin (Science Tokyo Latin font), Noto Sans JP for Japanese */
+    font-family: 'Hind', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--fg);
+    background: var(--bg);
+    line-height: 1.7;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  header.hero {
+    padding: 36px 0 32px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, var(--brand-quaternary) 0%, #ffffff 70%);
+    position: relative;
+  }
+  header.hero::after {
+    /* subtle Science Tokyo accent bar */
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-primary) 0%, var(--indigo-primary) 100%);
+  }
+  header.hero .venue {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--brand-primary);
+    background: var(--brand-tertiary);
+    padding: 5px 14px;
+    border-radius: var(--r-pill);
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  header.hero h1 {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.18;
+    margin: 0 0 16px;
+    letter-spacing: -0.015em;
+    color: var(--brand-primary);
+  }
+  header.hero .authors {
+    font-size: 16px;
+    color: var(--fg);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  header.hero a.affil {
+    display: inline-block;
+    margin-bottom: 22px;
+    transition: opacity 0.15s ease;
+    line-height: 0;
+  }
+  header.hero a.affil:hover { opacity: 0.75; }
+  header.hero a.affil img {
+    height: 30px;
+    width: auto;
+    display: inline-block;
+  }
+  header.hero .abstract-line {
+    max-width: 640px;
+    margin: 22px auto 0;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--fg);
+  }
+  header.hero .abstract-line strong { color: var(--brand-primary); }
+  /* Stat strip in the hero */
+  header.hero .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 760px;
+    margin: 28px auto 0;
+  }
+  header.hero .stat {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 14px 14px;
+    text-align: center;
+  }
+  header.hero .stat .num {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--brand-primary);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  header.hero .stat .label {
+    font-size: 12px;
+    color: var(--fg-mute);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  /* Rule preview teaser */
+  header.hero .rule-preview {
+    max-width: 720px;
+    margin: 26px auto 0;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 14px 18px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  header.hero .rule-preview .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand-primary);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  header.hero .rule-preview .rule {
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 12.5px;
+    color: var(--fg);
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+  }
+  header.hero .rule-preview .acc {
+    font-size: 11px;
+    color: var(--green-primary);
+    background: var(--green-quaternary);
+    border: 1px solid #c6f9bc;
+    padding: 2px 10px;
+    border-radius: var(--r-pill);
+    font-weight: 700;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  header.hero .rule-preview .meta {
+    font-size: 11px;
+    color: var(--fg-mute);
+    width: 100%;
+    margin-top: 2px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: var(--brand-primary);
+    color: #fff;
+    text-decoration: none;
+    border-radius: var(--r-pill);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    border: 1px solid transparent;
+  }
+  .links a:hover {
+    background: var(--indigo-secondary);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(28, 49, 119, 0.18);
+  }
+  .links a.alt {
+    background: #fff;
+    color: var(--brand-primary);
+    border: 1px solid var(--border-strong);
+  }
+  .links a.alt:hover {
+    background: var(--brand-quaternary);
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    box-shadow: none;
+  }
+
+  /* Sections */
+  section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  section.tinted { background: var(--brand-quaternary); }
+  section:last-of-type { border-bottom: none; }
+  h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 22px;
+    letter-spacing: -0.01em;
+    color: var(--brand-primary);
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 32px 0 12px;
+    color: var(--fg);
+  }
+  p { margin: 0 0 14px; color: var(--fg-soft); }
+  a { color: var(--indigo-primary); }
+  a:hover { color: var(--indigo-secondary); }
+
+  /* Highlight box */
+  .tldr {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-primary);
+    padding: 18px 22px;
+    border-radius: var(--r-md);
+    margin: 0 0 24px;
+    box-shadow: 0 1px 2px rgba(28, 49, 119, 0.04);
+  }
+  .tldr p { color: var(--fg); margin: 0; font-size: 17px; }
+  .tldr strong { color: var(--brand-primary); }
+
+  /* Figure */
+  figure {
+    margin: 24px 0;
+    text-align: center;
+  }
+  figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--r-md);
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+  figcaption {
+    font-size: 13px;
+    color: var(--fg-mute);
+    margin-top: 12px;
+    text-align: left;
+    line-height: 1.6;
+  }
+
+  /* Highlights grid */
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin: 8px 0 8px;
+  }
+  .highlight {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 20px 22px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .highlight:hover {
+    border-color: var(--brand-secondary);
+    transform: translateY(-1px);
+  }
+  .highlight .num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--brand-primary);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .highlight .label {
+    font-size: 13px;
+    color: var(--fg-mute);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    background: #fff;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 11px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    background: var(--brand-quaternary);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--brand-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--brand-quaternary); }
+  td.win { color: var(--good); font-weight: 700; }
+  .small-note { font-size: 12.5px; color: var(--fg-mute); margin-top: 8px; line-height: 1.6; }
+
+  /* Rule cards */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 14px;
+  }
+  .rule-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: 20px 22px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .rule-card:hover {
+    border-color: var(--brand-secondary);
+    box-shadow: 0 2px 8px rgba(28, 49, 119, 0.06);
+  }
+  .rule-card .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+  .rule-card .name {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--brand-primary);
+  }
+  .rule-card .acc {
+    font-size: 12px;
+    color: var(--green-primary);
+    background: var(--green-quaternary);
+    border: 1px solid #c6f9bc;
+    padding: 2px 10px;
+    border-radius: var(--r-pill);
+    font-weight: 700;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+  .rule-card .rule {
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--fg);
+    background: var(--brand-quaternary);
+    border: 1px solid var(--border);
+    padding: 12px 14px;
+    border-radius: var(--r-sm);
+    word-break: break-word;
+  }
+  .rule-card .desc {
+    font-size: 13px;
+    color: var(--fg-mute);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  /* Enables list */
+  .enables {
+    display: grid;
+    gap: 14px;
+    margin: 18px 0 8px;
+  }
+  .enable {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-primary);
+    border-radius: var(--r-md);
+    padding: 18px 22px;
+    transition: border-left-color 0.15s ease, transform 0.15s ease;
+  }
+  .enable:hover {
+    border-left-color: var(--indigo-primary);
+    transform: translateX(2px);
+  }
+  .enable-title {
+    font-weight: 600;
+    color: var(--brand-primary);
+    margin-bottom: 6px;
+    font-size: 15.5px;
+  }
+  .enable p { margin: 0; font-size: 14.5px; line-height: 1.65; }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    header.hero { padding: 28px 0 24px; }
+    header.hero h1 { font-size: 24px; }
+    header.hero a.affil img { height: 26px; }
+    header.hero .stats { grid-template-columns: repeat(2, 1fr); }
+    header.hero .abstract-line { font-size: 15px; }
+    header.hero .rule-preview { padding: 12px 14px; }
+    .two-col { grid-template-columns: 1fr; }
+    section { padding: 40px 0; }
+    .highlights { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* BibTeX */
+  pre.bib {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 18px 20px;
+    border-radius: var(--r-md);
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+    color: var(--fg-soft);
+  }
+
+  /* Footer */
+  footer {
+    padding: 36px 0 48px;
+    text-align: center;
+    font-size: 13px;
+    background: var(--brand-primary);
+    color: #ffffff;
+  }
+  footer a { color: #ffffff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); }
+  footer a:hover { color: #ffffff; border-bottom-color: #ffffff; }
+  footer a.footer-lockup,
+  footer a.footer-lockup:hover { border-bottom: none; color: #ffffff; }
+  footer a.footer-lockup:hover { opacity: 0.8; }
+  footer .footer-lockup {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  footer .footer-lockup img {
+    /* Navy-on-white source -> white-on-navy in the footer */
+    height: 30px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.95;
+  }
+  footer .footer-meta { color: rgba(255,255,255,0.85); }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <span class="venue">Accepted at IJCAI 2026</span>
+    <h1>A Foundation Model for<br>Zero-Shot Logical Rule Induction</h1>
+    <div class="authors">Yin Jun Phua</div>
+    <a class="affil" href="https://www.isct.ac.jp/en" aria-label="Institute of Science Tokyo">
+      <img src="assets/isct-lockup.png" alt="Institute of Science Tokyo">
+    </a>
+    <div class="links">
+      <a href="paper.pdf">Paper (PDF)</a>
+      <a class="alt" href="https://arxiv.org/abs/2605.04916">arXiv</a>
+      <a class="alt" href="appendix.pdf">Appendix</a>
+      <a class="alt" href="https://github.com/phuayj/neural-rule-inducer">Code</a>
+      <a class="alt" href="#bibtex">BibTeX</a>
+    </div>
+
+    <p class="abstract-line">
+      Trained once on synthetic Boolean formulas, <strong>NRI</strong> induces
+      interpretable DNF rules zero-shot on any tabular task. No retraining,
+      no fine-tuning, no per-task weights.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">Zero-shot</div>
+        <div class="label">14 UCI tasks, one checkpoint</div>
+      </div>
+      <div class="stat">
+        <div class="num">+17 pts</div>
+        <div class="label">over RIPPER / DT at 30% label noise</div>
+      </div>
+      <div class="stat">
+        <div class="num">&gt;92%</div>
+        <div class="label">accuracy with 32 spurious distractors</div>
+      </div>
+      <div class="stat">
+        <div class="num">~12 ms</div>
+        <div class="label">inference at $N{=}512$ variables</div>
+      </div>
+    </div>
+
+    <div class="rule-preview" aria-label="Example rule produced by NRI">
+      <span class="label">Example rule</span>
+      <span class="rule">plas<sub>&gt;med</sub> &and; pres<sub>&gt;med</sub> &and; skin<sub>&gt;med</sub> &and; age<sub>&gt;med</sub></span>
+      <span class="acc">68.0%</span>
+      <span class="meta">UCI <em>diabetes</em> &middot; produced in a single forward pass, no per-task training</span>
+    </div>
+  </div>
+</header>
+
+
+
+<section id="results">
+  <div class="container">
+    <h2>Results</h2>
+
+    <h3>Zero-shot transfer to UCI</h3>
+    <p>NRI is trained only on random synthetic Boolean formulas with $N \in [6, 12]$ variables. It is then applied directly to 14 UCI tabular tasks, with no retraining and no per-task fitting. 12 of those 14 tasks have more features than the training range, so most of this is genuine out-of-distribution transfer. Baselines are trained per dataset; NRI uses a single checkpoint everywhere.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Dataset</th>
+            <th class="num">$N$</th>
+            <th class="num">EBM (per-task)</th>
+            <th class="num">RIPPER (per-task)</th>
+            <th class="num">NRI (zero-shot)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>diabetes</td><td class="num">8</td><td class="num">66.9</td><td class="num">66.8</td><td class="num win">68.0</td></tr>
+          <tr><td>breast-cancer</td><td class="num">9</td><td class="num">93.0</td><td class="num">88.3</td><td class="num">88.3</td></tr>
+          <tr><td>vote</td><td class="num">32</td><td class="num">87.4</td><td class="num">91.6</td><td class="num">88.3</td></tr>
+          <tr><td>mushroom</td><td class="num">116</td><td class="num">99.4</td><td class="num">98.5</td><td class="num">87.8</td></tr>
+          <tr><td>kr-vs-kp</td><td class="num">73</td><td class="num">92.5</td><td class="num">89.9</td><td class="num">72.3</td></tr>
+          <tr><td>credit</td><td class="num">46</td><td class="num">82.2</td><td class="num">83.1</td><td class="num">71.5</td></tr>
+          <tr><td>nursery</td><td class="num">27</td><td class="num">91.1</td><td class="num">86.2</td><td class="num">71.3</td></tr>
+          <tr><td>spambase</td><td class="num">57</td><td class="num">91.1</td><td class="num">85.7</td><td class="num">71.9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small-note">5-fold stratified CV accuracy (%). NRI reaches 69.7% on average across all 14 tasks, 13 points behind EBM (which is trained per dataset). NRI is strongest on the two in-distribution tasks ($N \leq 12$) and beats every per-task baseline on diabetes. See the paper, Table&nbsp;1, for the full comparison against XGBoost, LightGBM, EBM, RIPPER, RuleFit, FIGS, DT, and N-DNF.</p>
+
+    <h3>Robustness to label noise</h3>
+    <p>This is where NRI most clearly outperforms classical rule learners. Symbolic methods fit their training data exactly and pay for it the moment labels are noisy. NRI's statistical encoding acts as implicit regularization, so accuracy degrades smoothly instead of falling off a cliff.</p>
+    <figure>
+      <img src="assets/exp9a_noise_comparison.png" alt="Label noise robustness curve">
+      <figcaption>NRI (blue) maintains accuracy from 92.3% at 0% noise to 87.4% at 30% noise. RIPPER and DT drop from ~99% to ~70% over the same range. NRI overtakes both around 15% noise.</figcaption>
+    </figure>
+
+    <h3>Robustness to spurious variables</h3>
+    <p>Real datasets are full of features that correlate with the label but should not appear in the rule. We append $D$ distractor features that correlate with the label at strength $\rho$ while having no causal relationship. NRI has to learn to ignore them.</p>
+    <figure>
+      <img src="assets/exp9b_spurious_heatmap.png" alt="Spurious variable robustness heatmap">
+      <figcaption>Accuracy stays above 92% across the entire $(D, \rho)$ grid, including 32 highly-correlated distractors at $\rho{=}0.9$. The counterfactual-necessity loss and the spurious-environment training regime are what make this work.</figcaption>
+    </figure>
+
+    <h3>Rule complexity scaling</h3>
+    <p>We measure exact logical equivalence between predicted and ground-truth rules across rule complexity dimensions $K$ (number of clauses) and $L$ (literals per clause).</p>
+    <figure>
+      <img src="assets/exp1a_heatmap.png" alt="Rule complexity scaling heatmap">
+      <figcaption>Exact logical match degrades with complexity, dominated by $K$. Recovery is 99.5% for $K{=}1, L{=}1$ and 24.0% for the hardest $K{=}4, L{=}3$ regime. Prediction accuracy stays in the 85–100% range even when the recovered rule is not literally identical, indicating semantically equivalent or near-equivalent solutions.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="rules" class="tinted">
+  <div class="container">
+    <h2>What NRI actually outputs</h2>
+    <p>The point of this work is not a number on a leaderboard, it is the rule itself. Each card below shows the DNF that NRI produced for a UCI task in a single forward pass, with no fine-tuning. The rules are short, readable, and align with what a domain expert would write down. This is what zero-shot interpretable induction looks like in practice.</p>
+
+    <div class="rules-grid">
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">diabetes</span>
+          <span class="acc">68.0%</span>
+        </div>
+        <div class="rule">plas<sub>&gt;med</sub> &and; pres<sub>&gt;med</sub> &and; skin<sub>&gt;med</sub> &and; age<sub>&gt;med</sub></div>
+        <div class="desc">Elevated plasma glucose, blood pressure, skin thickness, and older age &mdash; a clinically plausible summary of the binarized Pima dataset.</div>
+      </div>
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">breast-cancer-wisconsin</span>
+          <span class="acc">88.3%</span>
+        </div>
+        <div class="rule">Clump_Thickness<sub>&gt;med</sub> &and; Cell_Size_Uniformity<sub>&gt;med</sub> &and; Cell_Shape_Uniformity<sub>&gt;med</sub> &and; Bare_Nuclei<sub>&gt;med</sub></div>
+        <div class="desc">Larger and more irregular cells with prominent bare nuclei indicate malignancy &mdash; standard cytological features used by pathologists.</div>
+      </div>
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">tic-tac-toe</span>
+          <span class="acc">56.6%</span>
+        </div>
+        <div class="rule">&not;middle-left_x &and; &not;middle-middle_o &and; middle-middle_x</div>
+        <div class="desc">A short rule centered on board control: when the centre is X (and not O) and the middle-left is not X, the model leans toward an X-positive outcome.</div>
+      </div>
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">vote</span>
+          <span class="acc">88.3%</span>
+        </div>
+        <div class="rule">&not;physician-fee-freeze_n &and; &not;education-spending_n &and; &not;crime_n &and; &not;duty-free-exports_y</div>
+        <div class="desc">Recovers a familiar political signature from US congressional voting records, dominated by the physician-fee-freeze indicator.</div>
+      </div>
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">spambase</span>
+          <span class="acc">71.9%</span>
+        </div>
+        <div class="rule">&not;word_freq_hp<sub>&gt;med</sub> &and; &not;word_freq_hpl<sub>&gt;med</sub> &and; &not;word_freq_george<sub>&gt;med</sub> &and; &not;word_freq_meeting<sub>&gt;med</sub></div>
+        <div class="desc">Absence of HP-internal vocabulary (the dataset comes from HP employee mail) is a strong indicator of spam, exactly the artefact known to dominate this benchmark.</div>
+      </div>
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">mushroom</span>
+          <span class="acc">87.8%</span>
+        </div>
+        <div class="rule">(&not;odor_n &and; &not;gill-spacing_w &and; &not;stalk-root_e &and; &not;spore-print-color_k) &or; (&not;odor_n &and; &not;stalk-root_e &and; &not;stalk-surface-above-ring_s &and; &not;spore-print-color_k) &or; ...</div>
+        <div class="desc">A 5-clause DNF centered on odor (the canonical mushroom-edibility predictor) combined with stalk and spore features.</div>
+      </div>
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">kr-vs-kp (chess endgame)</span>
+          <span class="acc">72.3%</span>
+        </div>
+        <div class="rule">(bkxwp_f &and; &not;bkxwp_t &and; bxqsq_f &and; &not;bxqsq_t) &or; ... 5 more clauses</div>
+        <div class="desc">A 6-clause rule that exhausts NRI's training-time clause budget; this is one of the cases where the task genuinely needs more clauses than NRI was trained for.</div>
+      </div>
+
+      <div class="rule-card">
+        <div class="head">
+          <span class="name">german-credit</span>
+          <span class="acc">59.8%</span>
+        </div>
+        <div class="rule">checking_status_no_checking &and; (&not;purpose_domestic_appliance &and; &not;employment_1≤X&lt;4 &and; &not;property_no_known) &or; ...</div>
+        <div class="desc">Credit risk centered on the checking-account indicator, the strongest single feature in this benchmark.</div>
+      </div>
+
+    </div>
+    <p class="small-note">All rules above are produced by the same checkpoint, with no per-task fine-tuning. The full set of 14 rules (including the multi-class breakdowns for car and nursery) is in <a href="appendix.pdf">Appendix B</a>.</p>
+  </div>
+</section>
+
+<section id="why">
+  <div class="container">
+    <h2>Why this matters</h2>
+
+    <h3>Interpretability has always come at the cost of generality</h3>
+    <p>For thirty years, practitioners faced a forced choice. Want a model you can read? Use a decision tree or an ILP system, and accept that you will retrain it from scratch on every dataset, that it will overfit noisy labels, and that it will not transfer anything it learned on one problem to the next. Want a model that scales? Reach for gradient boosting or a deep network and explain the predictions with post-hoc tools you cannot fully trust.</p>
+    <p>NRI removes that trade-off. The model is general (one checkpoint, many domains), the output is symbolic (a DNF formula you can paste into a slide), and the reasoning is grounded in the data rather than in language priors.</p>
+
+    <h3>What this enables</h3>
+    <div class="enables">
+      <div class="enable">
+        <div class="enable-title">Instant hypothesis generation on new datasets</div>
+        <p>Run NRI on a fresh tabular dataset and get a candidate rule in a single forward pass. Domain experts can then accept, refute, or refine it, treating the model as a fast first-pass analyst rather than a black box that needs to be re-trained, re-tuned, and re-validated for every new question.</p>
+      </div>
+      <div class="enable">
+        <div class="enable-title">Auditable predictions in regulated domains</div>
+        <p>Because NRI emits an explicit DNF, the rule itself is the audit trail. There is no need for SHAP, LIME, or counterfactual explainers: the rule that produced the prediction is the explanation, and it is the same rule on every example.</p>
+      </div>
+      <div class="enable">
+        <div class="enable-title">Robust learning with messy labels</div>
+        <p>Statistical encoding gives NRI implicit regularization. Where symbolic rule learners memorize noise, NRI's accuracy degrades smoothly, making it usable in settings where labels come from human raters, weak supervision, or imperfect logging pipelines.</p>
+      </div>
+      <div class="enable">
+        <div class="enable-title">Resistance to spurious shortcuts</div>
+        <p>NRI is trained against environment-dependent distractors, so it learns to prefer features whose predictive power survives a change in environment. This is the same property that domain-generalization methods aim for, achieved here as a byproduct of how the model is pretrained.</p>
+      </div>
+      <div class="enable">
+        <div class="enable-title">A foundation for symbolic reasoning at scale</div>
+        <p>Vision and language each have foundation models. Symbolic reasoning does not. NRI is a step toward that: a single model whose pretraining objective is induction itself, ready to be extended to multi-valued attributes, continuous variables via discretization, and eventually first-order relational rules.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="tinted">
+  <div class="container">
+    <h2>How NRI works</h2>
+    <p>The whole architecture is built around one principle: never look at variable names. Anything tied to specific predicates would prevent transfer to new domains, so NRI replaces identities with statistical signatures and replaces ordered generation with parallel slots.</p>
+    <figure>
+      <img src="assets/pipeline.png" alt="NRI pipeline diagram">
+      <figcaption><strong>NRI architecture.</strong> An episode $(X, Y)$ is converted into per-literal statistics $\phi$. Cross-attention over examples produces literal embeddings, and a slot-based decoder synthesizes $K$ candidate clauses in parallel through learned literal gates $z$ and clause gates $w$. The rule is evaluated with the product T-norm for end-to-end training, then discretized into an interpretable DNF rule.</figcaption>
+    </figure>
+    <div class="two-col">
+      <div>
+        <h3>Statistical encoding</h3>
+        <p>Each literal $l_j$ is described by 18 identity-free statistics: class-conditional truth rates $P(l_j \mid y{=}1)$ and $P(l_j \mid y{=}0)$, marginal entropy $\mathcal{H}(l_j)$, polarity, observation rates, and mean co-occurrence with other literals. Two literals with the same statistics are interchangeable from NRI's point of view, which is exactly the invariance we want for transfer.</p>
+        <h3>Parallel slot decoder</h3>
+        <p>An autoregressive decoder would force a left-to-right order on a disjunction $C_1 \lor \ldots \lor C_K$, which has none. Instead, $K$ learned slot queries decode all clauses in parallel under FiLM modulation, preserving permutation invariance while letting different slots specialize.</p>
+      </div>
+      <div>
+        <h3>T-norm execution</h3>
+        <p>Literal gates $z_{k,j}$ and clause gates $w_k$ define a soft DNF that is executed under the product T-norm. Conjunctions become products, disjunctions become probabilistic OR, and the entire pipeline from raw episode to predicted label is differentiable. Discretizing the gates at inference yields the symbolic rule.</p>
+        <h3>Synthetic-only training</h3>
+        <p>NRI is trained on millions of randomly generated DNFs with up to $K{=}6$ clauses and $L{=}4$ literals. Each episode also injects spurious environment features with opposite correlations across two halves of the data, forcing the model to rely on causal signal rather than marginal correlation. No real-world supervision is used.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bibtex">
+  <div class="container">
+    <h2>BibTeX</h2>
+    <pre class="bib">TBD &mdash; will be updated once the official IJCAI 2026 proceedings citation is available.</pre>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <a class="footer-lockup" href="https://www.isct.ac.jp/en" aria-label="Institute of Science Tokyo">
+      <img src="assets/isct-lockup.png" alt="Institute of Science Tokyo">
+    </a>
+    <div class="footer-meta">
+      Yin Jun Phua &middot; <a href="mailto:phua@comp.isct.ac.jp">phua@comp.isct.ac.jp</a> &middot;
+      <a href="https://arxiv.org/abs/2605.04916">arXiv</a> &middot;
+      <a href="https://github.com/phuayj/neural-rule-inducer">Code &amp; checkpoint</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
