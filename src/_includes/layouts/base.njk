@@ -2,7 +2,19 @@
 <html lang="{{ lang | default('en') }}">
 <head>
   <meta charset="utf-8">
-  <title>{{ title }}</title>
+  {% if lang == 'ja' %}
+  {% set siteTitleSuffix = site.titleSuffix.ja %}
+  {% else %}
+  {% set siteTitleSuffix = site.titleSuffix.en %}
+  {% endif %}
+  {% if pageTitle %}
+  {% set computedTitle = pageTitle + " | " + siteTitleSuffix %}
+  {% elseif title %}
+  {% set computedTitle = title %}
+  {% else %}
+  {% set computedTitle = siteTitleSuffix %}
+  {% endif %}
+  <title>{{ computedTitle }}</title>
   {% if description %}
   {% set pageDescription = description %}
   {% elseif lang == 'ja' %}

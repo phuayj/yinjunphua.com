@@ -38,18 +38,6 @@ module.exports = {
       authors: "<strong>Yin Jun Phua</strong>, Katsumi Inoue",
       venue: "Inductive Logic Programming - 29th International Conference(ILP), JSAI2019 72-80, 2019.",
     },
-    {
-      title: "Learning Representation of Relational Dynamics with Delays and Refining with Prior Knowledge",
-      url: "https://dblp.org/rec/journals/flap/PhuaRI19",
-      authors: "<strong>Yin Jun Phua</strong>, Tony Ribeiro, Katsumi Inoue",
-      venue: "IfCoLog Journal of Logics and their Applications(FLAP), 6(4) 695-708, 2019.",
-    },
-    {
-      title: "Learning Logic Program Representation for Delayed Systems With Limited Training Data",
-      url: "https://dblp.org/rec/conf/ilp/PhuaI19",
-      authors: "<strong>Yin Jun Phua</strong>, Tony Ribeiro, Sophie Tourret, Katsumi Inoue",
-      venue: "Late Breaking Papers of the 27th International Conference on Inductive Logic Programming, 27-37, 2017.",
-    },
   ],
 
   ja: [
@@ -90,18 +78,6 @@ module.exports = {
       note: "[最優秀学生論文賞]",
       authors: "<strong>Yin Jun Phua</strong>, Katsumi Inoue",
       venue: "Inductive Logic Programming - 29th International Conference(ILP), JSAI2019 72-80, 2019.",
-    },
-    {
-      title: "Learning Representation of Relational Dynamics with Delays and Refining with Prior Knowledge",
-      url: "https://dblp.org/rec/journals/flap/PhuaRI19",
-      authors: "<strong>Yin Jun Phua</strong>, Tony Ribeiro, Katsumi Inoue",
-      venue: "IfCoLog Journal of Logics and their Applications(FLAP), 6(4) 695-708, 2019.",
-    },
-    {
-      title: "Learning Logic Program Representation for Delayed Systems With Limited Training Data",
-      url: "https://dblp.org/rec/conf/ilp/PhuaI19",
-      authors: "<strong>Yin Jun Phua</strong>, Tony Ribeiro, Sophie Tourret, Katsumi Inoue",
-      venue: "Late Breaking Papers of the 27th International Conference on Inductive Logic Programming, 27-37, 2017.",
     },
   ],
 };

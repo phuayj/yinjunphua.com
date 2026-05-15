@@ -3,6 +3,21 @@
   "descriptionEn": "Yin Jun Phua, currently an assistant professor at Institute of Science Tokyo. Main research focus is on bridging the gap between symbolic AI and neural networks.",
   "descriptionJa": "ポア　インジュン，現在東京科学大学にて助教をしています．研究テーマはシンボリックAIおよびニューラルネットワークの融合です．",
   "umamiWebsiteId": "553526c2-8bba-4565-af3b-38ce4c9e4002",
+  "author": {
+    "nameEn": "Yin Jun, Phua",
+    "nameJa": "ポア　インジュン",
+    "roleEn": "Assistant Professor",
+    "roleJa": "助教"
+  },
+  "affiliation": {
+    "en": "Institute of Science Tokyo",
+    "enShort": "Science Tokyo",
+    "ja": "東京科学大学"
+  },
+  "titleSuffix": {
+    "en": "Yin Jun, Phua -- Assistant Professor at Science Tokyo",
+    "ja": "ポア　インジュン -- 助教，東京科学大学"
+  },
   "links": {
     "orcid": "https://orcid.org/0000-0003-1178-8238",
     "researchmap": {
