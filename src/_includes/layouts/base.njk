@@ -2,29 +2,104 @@
 <html lang="{{ lang | default('en') }}">
 <head>
   <meta charset="utf-8">
+
+  {# ---------- Language-aware variables ---------- #}
   {% if lang == 'ja' %}
-  {% set siteTitleSuffix = site.titleSuffix.ja %}
+    {% set siteTitleSuffix = site.titleSuffix.ja %}
+    {% set homepageTitle = site.titleHomepage.ja %}
+    {% set siteName = site.titleSuffix.ja %}
+    {% set personName = site.author.nameJa %}
+    {% set personHeadline = site.author.headlineJa %}
+    {% set affiliationName = site.affiliation.ja %}
+    {% set researchmapLink = site.links.researchmap.ja %}
+    {% set ogLocale = "ja_JP" %}
+    {% set ogLocaleAlt = "en_US" %}
   {% else %}
-  {% set siteTitleSuffix = site.titleSuffix.en %}
+    {% set siteTitleSuffix = site.titleSuffix.en %}
+    {% set homepageTitle = site.titleHomepage.en %}
+    {% set siteName = site.titleSuffix.en %}
+    {% set personName = site.author.nameEnPlain %}
+    {% set personHeadline = site.author.headlineEn %}
+    {% set affiliationName = site.affiliation.en %}
+    {% set researchmapLink = site.links.researchmap.en %}
+    {% set ogLocale = "en_US" %}
+    {% set ogLocaleAlt = "ja_JP" %}
   {% endif %}
+
+  {# ---------- Title ---------- #}
   {% if pageTitle %}
-  {% set computedTitle = pageTitle + " | " + siteTitleSuffix %}
+    {% set computedTitle = pageTitle + " | " + siteTitleSuffix %}
   {% elseif title %}
-  {% set computedTitle = title %}
+    {% set computedTitle = title %}
+  {% elseif page.url == '/' or page.url == '/ja/' %}
+    {% set computedTitle = homepageTitle %}
   {% else %}
-  {% set computedTitle = siteTitleSuffix %}
+    {% set computedTitle = siteTitleSuffix %}
   {% endif %}
   <title>{{ computedTitle }}</title>
+
+  {# ---------- Description ---------- #}
   {% if description %}
-  {% set pageDescription = description %}
+    {% set pageDescription = description %}
   {% elseif lang == 'ja' %}
-  {% set pageDescription = site.descriptionJa %}
+    {% set pageDescription = site.descriptionJa %}
   {% else %}
-  {% set pageDescription = site.descriptionEn %}
+    {% set pageDescription = site.descriptionEn %}
   {% endif %}
   {% if pageDescription %}
   <meta name="description" content="{{ pageDescription }}">
   {% endif %}
+
+  {# ---------- Canonical + alternates ---------- #}
+  {% set canonicalUrl = canonical or site.url + page.url %}
+  {% if canonicalUrl %}
+  <link rel="canonical" href="{{ canonicalUrl }}">
+  {% endif %}
+  {% if alternates %}
+    {% for alt in alternates %}
+  <link rel="alternate" hreflang="{{ alt.hreflang }}" href="{{ alt.href }}">
+    {% endfor %}
+  {% endif %}
+  <meta http-equiv="content-language" content="{{ lang | default('en') }}">
+  {% if noindex %}
+  <meta name="robots" content="noindex, nofollow">
+  {% endif %}
+
+  {# ---------- Open Graph ---------- #}
+  {% set isHomepage = (page.url == '/' or page.url == '/ja/') %}
+  {% set ogTypeValue = ogType or ('profile' if isHomepage else 'website') %}
+  {% set ogTitleValue = ogTitle or computedTitle %}
+  {% set ogDescriptionValue = ogDescription or pageDescription %}
+  {% set ogImageValue = ogImage or (site.url + site.socialImage) %}
+  <meta property="og:type" content="{{ ogTypeValue }}">
+  <meta property="og:title" content="{{ ogTitleValue }}">
+  {% if ogDescriptionValue %}
+  <meta property="og:description" content="{{ ogDescriptionValue }}">
+  {% endif %}
+  <meta property="og:url" content="{{ canonicalUrl }}">
+  <meta property="og:image" content="{{ ogImageValue }}">
+  {% if not ogImage %}
+  <meta property="og:image:width" content="{{ site.socialImageWidth }}">
+  <meta property="og:image:height" content="{{ site.socialImageHeight }}">
+  <meta property="og:image:alt" content="{{ personName }}, {{ site.author.roleEn if lang != 'ja' else site.author.roleJa }} at {{ affiliationName }}">
+  {% endif %}
+  <meta property="og:site_name" content="{{ siteName }}">
+  <meta property="og:locale" content="{{ ogLocale }}">
+  <meta property="og:locale:alternate" content="{{ ogLocaleAlt }}">
+  {% if isHomepage %}
+  <meta property="profile:first_name" content="{{ site.author.givenNameEn }}">
+  <meta property="profile:last_name" content="{{ site.author.familyNameEn }}">
+  {% endif %}
+
+  {# ---------- Twitter card ---------- #}
+  <meta name="twitter:card" content="{{ twitterCard or 'summary' }}">
+  <meta name="twitter:title" content="{{ ogTitleValue }}">
+  {% if ogDescriptionValue %}
+  <meta name="twitter:description" content="{{ ogDescriptionValue }}">
+  {% endif %}
+  <meta name="twitter:image" content="{{ ogImageValue }}">
+
+  {# ---------- Stylesheets + icons ---------- #}
   <link rel="stylesheet" href="/css/chota.css">
   <link rel="stylesheet" href="/css/style.css">
   {% if addJaStyles %}
@@ -35,38 +110,56 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% if alternates %}
-    {% for alt in alternates %}
-  <link rel="alternate" hreflang="{{ alt.hreflang }}" href="{{ alt.href }}">
-    {% endfor %}
-  {% endif %}
-  {% set canonicalUrl = canonical or site.url + page.url %}
-  {% if canonicalUrl %}
-  <link rel="canonical" href="{{ canonicalUrl }}">
-  {% endif %}
-  <meta http-equiv="content-language" content="{{ lang | default('en') }}">
-  {% if ogType %}
-  <meta property="og:type" content="{{ ogType }}">
-  {% endif %}
-  {% if ogTitle %}
-  <meta property="og:title" content="{{ ogTitle }}">
-  {% endif %}
-  {% if ogDescription %}
-  <meta property="og:description" content="{{ ogDescription }}">
-  {% endif %}
-  {% if ogImage %}
-  <meta property="og:image" content="{{ ogImage }}">
-  {% endif %}
+
+  {# ---------- JSON-LD structured data ---------- #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ siteName }}",
+    "url": "{{ site.url }}/",
+    "inLanguage": ["en", "ja"]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "{{ site.author.nameEnPlain }}",
+    "givenName": "{{ site.author.givenNameEn }}",
+    "familyName": "{{ site.author.familyNameEn }}",
+    "alternateName": ["{{ site.author.nameEn }}", "{{ site.author.nameJa }}"],
+    "url": "{{ site.url }}/",
+    "image": "{{ site.url }}{{ site.socialImage }}",
+    "jobTitle": "{{ site.author.roleEn }}",
+    "description": "{{ site.author.headlineEn }} at {{ site.affiliation.en }}.",
+    "worksFor": {
+      "@type": "CollegeOrUniversity",
+      "name": "{{ site.affiliation.en }}",
+      "url": "{{ site.affiliation.url }}"
+    },
+    "alumniOf": [
+      {% for alma in site.alumniOf %}{
+        "@type": "CollegeOrUniversity",
+        "name": "{{ alma.nameEn }}"
+      }{% if not loop.last %},{% endif %}{% endfor %}
+    ],
+    "knowsAbout": [
+      {% for k in site.keywords %}"{{ k }}"{% if not loop.last %},{% endif %}{% endfor %}
+    ],
+    "sameAs": [
+      "{{ site.links.orcid }}",
+      "{{ site.links.researchmapId }}",
+      "{{ site.links.dblp }}",
+      "{{ site.links.github }}"
+    ]
+  }
+  </script>
 </head>
 <body>
   {% block content %}
   {{ content | safe }}
   {% endblock %}
-  {% if lang == 'ja' %}
-  {% set researchmapLink = site.links.researchmap.ja %}
-  {% else %}
-  {% set researchmapLink = site.links.researchmap.en %}
-  {% endif %}
   {% set emailObfuscated = emailObfuscatedOverride or page.emailObfuscated or site.emailObfuscated %}
   <footer class="text-center">
     <p><a href="{{ site.links.orcid }}" target="_blank">ORCID</a> &bull; <a href="{{ researchmapLink }}" target="_blank">researchmap</a> &bull; <a href="{{ site.links.dblp }}" target="_blank">dblp</a> &bull; <a href="{{ site.links.github }}" target="_blank">Github</a></p>

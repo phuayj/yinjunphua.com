@@ -8,6 +8,39 @@ footer {
 	margin-top: 4rem;
 }
 
+/* ---------- Home page hero (profile photo + bio) ---------- */
+/* Desktop / tablet: bio left (col-10), photo right (col-2) — default row layout */
+/* Mobile: photo first (centered, capped), bio second */
+@media screen and (max-width: 599px) {
+	.home-hero {
+		flex-direction: column-reverse;
+	}
+	.home-hero-photo img {
+		max-width: 14rem;
+		display: block;
+		margin: 0 auto 1rem auto;
+	}
+}
+
+/* ---------- Mobile typography & spacing tweaks ---------- */
+@media screen and (max-width: 599px) {
+	/* Shrink heading scale on phones so the nav heading
+	   ("Yin Jun, Phua — Neuro-Symbolic AI Researcher" etc.) fits,
+	   and the section h1 > h2 > h3 hierarchy is preserved.
+	   Chota defaults: h1 2em, h2 1.75em, h3 1.5em. */
+	h1 { font-size: 1.75em; }
+	h2 { font-size: 1.4em; }
+	h3 { font-size: 1.2em; }
+	/* Tighten the very generous footer padding on small screens */
+	footer {
+		padding: 3rem 1.5rem;
+	}
+	/* Prevent the email address from breaking awkwardly mid-token */
+	.email-nowrap {
+		white-space: nowrap;
+	}
+}
+
 .post {
 	font-size: 2.2rem;
 	font-family: Times, "Times New Roman", Georgia, serif;

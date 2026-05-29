@@ -1,6 +1,7 @@
 ---
 layout: layouts/page.njk
 lang: ja
+description: "ポア　インジュン（東京科学大学　助教）の個人ページ．ニューロシンボリックAIの観点から，基盤モデルによる論理規則帰納，帰納論理プログラミング (ILP)，説明可能AI (XAI) などに取り組み，シンボリックAIとニューラルネットワークの融合を目指しています．"
 alternates:
   - hreflang: en
     href: "https://yinjunphua.com/"
@@ -8,31 +9,31 @@ alternates:
     href: "https://yinjunphua.com/ja/"
 permalink: "/ja/"
 headingText: "ポア　インジュン"
-headingSmall: "博士（情報学）"
+headingSmall: "ニューロシンボリックAI研究者"
 navRightHref: "/ja/my-research.html"
 navRightLabel: "私の研究"
 addJaStyles: true
 ---
-<div class="row">
+<div class="row home-hero">
   <div class="col-10">
     <p><span class="text-grey">2024年10月より，</span>東京科学大学<span class="text-grey">にて</span><strong>助教</strong><span class="text-grey">をしています．</span></p>
     <p><span class="text-grey">私の主な研究テーマは</span><strong>シンボリックAI</strong>および<strong>ニューラルネットワーク</strong>の融合です．</p>
-    <p class="text-grey">博士課程では記号論理規則を出力する機械学習手法に取り組んでいました．その論理規則は入力された時系列データの遷移を説明するものであり，その論理規則を用いて観測対象の動的システムの予測や制御などが可能になります．</p>
-    <p class="text-grey">現在，私はシンボリックAIとニューラルネットワークの良いところどりする手法の開発に興味があります．シンボリックAIでは，モデルが学習したものがそのまま人間にも理解が可能である．ただノイズなどに影響されやすいので実世界での応用が限られています．一方，ニューラルネットワークはノイズに対して頑健であり実世界でもさまざまな応用があります．しかし，ニューラルネットワークが学習した知識は人間には伝わりません．両手法の長所を融合し，実世界で応用が可能且つ学習したものが人間にも伝わる手法を開発しようとしています．</p>
+    <p class="text-grey">博士課程では，記号論理規則を出力する機械学習手法に取り組んでいました．得られた論理規則は，入力された時系列データの遷移を説明するものであり，観測対象の動的システムの予測や制御に利用できます．</p>
+    <p class="text-grey">現在は，シンボリックAIとニューラルネットワークの長所を融合する手法の開発に取り組んでいます．シンボリックAIはモデルが学習した内容をそのまま人間が理解できる一方で，ノイズに弱く実世界での応用が限られます．ニューラルネットワークはノイズに頑健で広く応用されますが，獲得した知識は人間には読み取りにくいという課題があります．両者の利点を兼ね備え，実世界で応用可能かつ人間に伝わる知的システムの実現を目指しています．</p>
   </div>
-  <div class="col-2">
+  <div class="col-2 home-hero-photo">
     <picture>
       <source srcset="/images/profile_2023.webp" type="image/webp">
       <source srcset="/images/profile_2023.png" type="image/png">
-      <img src="/images/profile_2023.png" alt="2023年の私">
+      <img src="/images/profile_2023.png" alt="ポア　インジュン，東京科学大学　助教">
     </picture>
   </div>
 </div>
-<p><span class="text-grey">研究分野：</span>ディープラーニング，シンボリックルール抽出，時系列分析，説明可能なAI，ハイブリッドアプローチ，ニューラルネットワーク，ロバスト性</p>
-<p class="text-grey">面白いプロジェクトまたは質問がある場合は，メールでご連絡ください．メールアドレスは<span class="text-dark">phua<span class="replace"> [at] </span>comp.isct.ac.jp</span></p>
-<h3>目標</h3>
-<p class="text-grey">私の研究テーマはシンボリックAIおよびニューラルネットワークを融合する技術を開発し，両手法の強みを生かしより<span class="text-dark"><strong>頑健</strong>且つ<strong>フレキシブル</strong>な知的システムを構築する</span>ことです．</p>
-<h3>業績</h3>
+<p><span class="text-grey">研究分野：</span>ニューロシンボリックAI，基盤モデル，論理規則帰納，帰納論理プログラミング (ILP)，深層学習，説明可能AI (XAI)，時系列解析，頑健性</p>
+<p class="text-grey">面白いプロジェクトまたは質問がある場合は，メールでご連絡ください．メールアドレスは<span class="text-dark email-nowrap">phua<span class="replace"> [at] </span>comp.isct.ac.jp</span></p>
+<h2>目標</h2>
+<p class="text-grey">私の研究テーマは，シンボリックAIとニューラルネットワークを融合する技術を開発し，両者の強みを生かした<span class="text-dark"><strong>頑健</strong>・<strong>柔軟</strong>・<strong>解釈可能</strong>な知的システムを構築する</span>ことです．</p>
+<h2>業績</h2>
 {% for pub in publications.ja %}
 <p>
   <a target="_blank" href="{{ pub.url }}">{{ pub.title }}</a>{% if pub.note %} {{ pub.note }}{% endif %}<br>
@@ -40,7 +41,7 @@ addJaStyles: true
   <span class="text-grey">{{ pub.venue }}</span>
 </p>
 {% endfor %}
-<h3>競争的資金・共同研究</h3>
+<h2>競争的資金・共同研究</h2>
 {% for proj in projects.ja %}
 <p>
   <a target="_blank" href="{{ proj.url }}">{{ proj.title }}</a><br>
@@ -52,14 +53,14 @@ addJaStyles: true
 {% endfor %}
 <div class="row">
   <div class="col-12">
-    <h3>招待講演</h3>
+    <h2>招待講演</h2>
     <div class="row">
       <div class="col-2">2025年8月27日</div>
       <div class="col-10"><a href="https://sig-fpai.org/past/fpai133.html" target="_blank">第133回SIG-FPAI</a> ニューロシンボリック AI における記号論理の不変性の応用 <a href="/files/toyama-250826.pdf">[スライド]</a></div>
     </div>
   </div>
   <div class="col">
-    <h3>学歴</h3>
+    <h2>学歴</h2>
     <div class="row">
       <div class="col-5">2019年4月 - 2022年3月</div>
       <div class="col-7">
@@ -87,7 +88,7 @@ addJaStyles: true
     </div>
   </div>
   <div class="col">
-    <h3>職歴</h3>
+    <h2>職歴</h2>
     <div class="row">
       <div class="col-5">2024年9月 - 現在</div>
       <div class="col-7">東京科学大学<br>情報理工学院<br><a href="http://www.net.comp.isct.ac.jp/" target="_blank">村田研究室</a><br>助教</div>
@@ -112,7 +113,7 @@ addJaStyles: true
 </div>
 <div class="row">
   <div class="col">
-    <h3>受賞</h3>
+    <h2>受賞</h2>
     <div class="row">
       <div class="col-2">
         2023年
@@ -140,7 +141,7 @@ addJaStyles: true
   </div>
 
   <div class="col">
-    <h3>講義</h3>
+    <h2>講義</h2>
     <div class="row">
       <div class="col-3">
         2025
@@ -178,8 +179,8 @@ addJaStyles: true
 <hr />
 <div class="row">
   <div class="col">
-    <h3>メモ帳</h3>
-    <p>研究や教育に関して思うところ。主にひとりごと。</p>
+    <h2>メモ帳</h2>
+    <p>研究や教育に関して思うところ．主にひとりごと．</p>
     {% set japaneseThoughts = collections.thoughts | where("data.lang", "ja") | reverse %}
     {% for post in japaneseThoughts %}
     {% set listTitle = post.data.heading or post.data.title %}

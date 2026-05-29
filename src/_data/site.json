@@ -5,25 +5,57 @@
   "umamiWebsiteId": "553526c2-8bba-4565-af3b-38ce4c9e4002",
   "author": {
     "nameEn": "Yin Jun, Phua",
+    "nameEnPlain": "Yin Jun Phua",
+    "givenNameEn": "Yin Jun",
+    "familyNameEn": "Phua",
     "nameJa": "ポア　インジュン",
+    "givenNameJa": "インジュン",
+    "familyNameJa": "ポア",
     "roleEn": "Assistant Professor",
-    "roleJa": "助教"
+    "roleJa": "助教",
+    "headlineEn": "Neuro-Symbolic AI Researcher",
+    "headlineJa": "ニューロシンボリックAI研究者"
   },
   "affiliation": {
     "en": "Institute of Science Tokyo",
     "enShort": "Science Tokyo",
-    "ja": "東京科学大学"
+    "ja": "東京科学大学",
+    "url": "https://www.isct.ac.jp/en"
   },
+  "alumniOf": [
+    { "nameEn": "The Graduate University for Advanced Studies", "nameJa": "総合研究大学院大学" },
+    { "nameEn": "Tokyo Institute of Technology", "nameJa": "東京工業大学" }
+  ],
+  "keywords": [
+    "Neuro-symbolic AI",
+    "Symbolic AI",
+    "Neural networks",
+    "Inductive logic programming",
+    "Explainable AI",
+    "Foundation models",
+    "Logical rule induction",
+    "Deep learning",
+    "Machine learning",
+    "Time series analysis"
+  ],
   "titleSuffix": {
-    "en": "Yin Jun, Phua -- Assistant Professor at Science Tokyo",
-    "ja": "ポア　インジュン -- 助教，東京科学大学"
+    "en": "Yin Jun Phua",
+    "ja": "ポア　インジュン"
   },
+  "titleHomepage": {
+    "en": "Yin Jun Phua | Neuro-Symbolic AI Researcher — Science Tokyo",
+    "ja": "ポア　インジュン | ニューロシンボリックAI研究者 — 東京科学大学"
+  },
+  "socialImage": "/images/profile_2023.png",
+  "socialImageWidth": 743,
+  "socialImageHeight": 836,
   "links": {
     "orcid": "https://orcid.org/0000-0003-1178-8238",
     "researchmap": {
       "en": "https://researchmap.jp/phuayj?lang=en",
       "ja": "https://researchmap.jp/phuayj?lang=ja"
     },
+    "researchmapId": "https://researchmap.jp/phuayj",
     "dblp": "https://dblp.org/pid/217/3830.html",
     "github": "https://github.com/phuayj"
   },
