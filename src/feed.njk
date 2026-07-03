@@ -1,0 +1,31 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Yin Jun Phua — Thoughts</title>
+  <subtitle>{{ site.descriptionEn }}</subtitle>
+  <link href="{{ site.url }}/feed.xml" rel="self"/>
+  <link href="{{ site.url }}/"/>
+  <id>{{ site.url }}/</id>
+  {%- set posts = collections.thoughts | reverse %}
+  <updated>{{ posts[0].date.toISOString() }}</updated>
+  <author>
+    <name>{{ site.author.nameEnPlain }}</name>
+    <uri>{{ site.url }}/</uri>
+  </author>
+  {%- for post in posts %}
+  <entry>
+    <title>{{ post.data.heading or post.data.title }}</title>
+    <link href="{{ site.url }}{{ post.url }}"/>
+    <id>{{ site.url }}{{ post.url }}</id>
+    <updated>{{ post.date.toISOString() }}</updated>
+    <published>{{ post.date.toISOString() }}</published>
+    {%- if post.data.description %}
+    <summary>{{ post.data.description }}</summary>
+    {%- endif %}
+    <category term="{{ post.data.lang or 'en' }}"/>
+  </entry>
+  {%- endfor %}
+</feed>

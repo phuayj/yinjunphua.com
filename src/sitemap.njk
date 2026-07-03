@@ -20,4 +20,8 @@ eleventyExcludeFromCollections: true
   </url>
   {%- endif %}
 {%- endfor %}
+  {# Static pages copied via passthrough (not part of Eleventy collections) #}
+  <url>
+    <loc>{{ site.url }}/papers/nri/</loc>
+  </url>
 </urlset>

@@ -107,6 +107,30 @@
   {% endif %}
   <meta name="twitter:image" content="{{ ogImageValue }}">
 
+  {# ---------- Article metadata (blog posts) ---------- #}
+  {% if ogTypeValue == 'article' and page.date %}
+  <meta property="article:published_time" content="{{ page.date.toISOString().slice(0, 10) }}">
+  <meta property="article:author" content="{{ site.author.nameEnPlain }}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ (ogTitle or heading or computedTitle) | dump | safe }},
+    "description": {{ pageDescription | dump | safe }},
+    "datePublished": "{{ page.date.toISOString().slice(0, 10) }}",
+    "inLanguage": "{{ lang | default('en') }}",
+    "image": "{{ ogImageValue }}",
+    "url": "{{ canonicalUrl }}",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ canonicalUrl }}" },
+    "author": {
+      "@type": "Person",
+      "name": "{{ site.author.nameEnPlain }}",
+      "url": "{{ site.url }}/"
+    }
+  }
+  </script>
+  {% endif %}
+
   {# ---------- Stylesheets + icons ---------- #}
   <link rel="stylesheet" href="{{ '/css/chota.css' | bust }}">
   <link rel="stylesheet" href="{{ '/css/style.css' | bust }}">
@@ -117,6 +141,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
+  <link rel="alternate" type="application/atom+xml" title="Yin Jun Phua — Thoughts" href="/feed.xml">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   {# ---------- JSON-LD structured data ---------- #}
