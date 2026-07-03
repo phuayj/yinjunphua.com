@@ -7,6 +7,9 @@ permalink: "/thoughts/2023-10-11-bhyve-cpu-lockup-issue.html"
 date: 2023-10-11
 tags:
   - thoughts
+description: "Linux guests (Debian and Rocky) on bhyve/FreeBSD kept freezing with soft-lockup and clocksource watchdog errors. The real cause turned out to be insufficient entropy — enabling the virt_random option stopped the lockups."
+ogType: article
+ogTitle: "Bhyve CPU Lockup Issue"
 ---
 {% block post %}
 <p>I was setting up our lab server infrastructure, and I've deployed several VMs on bhyve on FreeBSD for some miscellaneous services. But some of the Linux VMs (both Debian and Rocky Linux) were sometimes locking up. The Debian VM that was locking up would show messages such as:</p>

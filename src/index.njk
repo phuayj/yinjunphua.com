@@ -15,10 +15,10 @@ navRightLabel: "My Research"
 ---
 <div class="row home-hero">
   <div class="col-10">
-    <p><span class="text-grey">Currently</span> <strong>Assistant Professor</strong> <span class="text-grey">at</span> Institute of Science Tokyo <span class="text-grey">since</span> October, 2024.</p>
+    <p><strong>Assistant Professor</strong> <span class="text-grey">at</span> Institute of Science Tokyo <span class="text-grey">since</span> October 2024.</p>
     <p><span class="text-grey">My main research focus is on</span> bridging the gap between <strong>symbolic AI</strong> and <strong>neural networks</strong>.</p>
     <p class="text-grey">During my Ph.D., I developed deep learning techniques that extract symbolic rules from time series data. These rules explain the observed data and can be used to predict and manipulate dynamic systems — a step toward explainable AI systems that provide human-accessible insights into complex behaviour.</p>
-    <p class="text-grey">I am now developing techniques that combine the strengths of both worlds. Symbolic AI produces knowledge that is directly readable by humans, but is brittle and hard to scale; neural networks are robust and broadly applicable, but the knowledge they encode is hard to access. By combining both approaches I aim to build intelligent systems that are simultaneously robust enough for real-world deployment and transparent enough to teach us something.</p>
+    <p class="text-grey">I am now developing techniques that combine the strengths of both worlds. Symbolic AI produces knowledge that is directly readable by humans, but is brittle and hard to scale; neural networks are robust and broadly applicable, but the knowledge they encode is hard to access. By combining both approaches I aim to build intelligent systems that are simultaneously robust enough for real-world deployment and transparent enough to teach us something. Most recently, this led to the <a href="/papers/nri/">Neural Rule Inducer (NRI)</a>, a foundation model that induces human-readable logical rules on new datasets in a single forward pass, accepted to IJCAI 2026.</p>
   </div>
   <div class="col-2 home-hero-photo">
     <picture>
@@ -31,15 +31,16 @@ navRightLabel: "My Research"
 <p><span class="text-grey">Research areas: </span>neuro-symbolic AI, foundation models, logical rule induction, inductive logic programming (ILP), deep learning, explainable AI (XAI), time series analysis, and robustness.</p>
 <p class="text-grey">Have interesting projects or want to have some discussion? You can contact me at <span class="text-dark email-nowrap">phua<span class="replace"> [at] </span>comp.isct.ac.jp</span></p>
 <h2>Goal</h2>
-<p class="text-grey">My main focus is on bridging the gap between symbolic AI and neural networks, combining the strengths of both to build intelligent systems that are simultaneously <strong class="text-dark">robust</strong>, <strong class="text-dark">flexible</strong>, and <strong class="text-dark">interpretable</strong>.</p>
-<h2>Main Publications</h2>
+<p class="text-grey">Neural networks now drive most of AI, but the knowledge they acquire remains impenetrable to the people who rely on them. My long-term goal is to make that knowledge <strong class="text-dark">readable</strong>, <strong class="text-dark">auditable</strong>, and <strong class="text-dark">correctable</strong> — so that a doctor, an engineer, or a scientist can see what a model has learned, challenge it, and build on it. Toward this, I am developing foundation models that learn generalizable, interpretable knowledge from background knowledge and limited data, and logical reasoning techniques that make generative AI reliable.</p>
+<h2>Selected Publications</h2>
 {% for pub in publications.en %}
 <p>
-  <a target="_blank" href="{{ pub.url }}">{{ pub.title }}</a>{% if pub.note %} {{ pub.note }}{% endif %}<br>
+  <a target="_blank" href="{{ pub.url }}">{{ pub.title }}</a>{% if pub.note %} {{ pub.note }}{% endif %}{% if pub.arxiv %} <a target="_blank" href="{{ pub.arxiv }}">[arXiv]</a>{% endif %}<br>
   {{ pub.authors | safe }}<br>
   <span class="text-grey">{{ pub.venue }}</span>
 </p>
 {% endfor %}
+<p><a target="_blank" href="{{ site.links.dblp }}">Full publication list on dblp &raquo;</a></p>
 <h2>Research Projects/Grants</h2>
 {% for proj in projects.en %}
 <p>

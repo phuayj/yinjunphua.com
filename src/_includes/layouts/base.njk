@@ -70,7 +70,15 @@
   {% set ogTypeValue = ogType or ('profile' if isHomepage else 'website') %}
   {% set ogTitleValue = ogTitle or computedTitle %}
   {% set ogDescriptionValue = ogDescription or pageDescription %}
-  {% set ogImageValue = ogImage or (site.url + site.socialImage) %}
+  {% if ogImage %}
+    {% if 'http://' in ogImage or 'https://' in ogImage %}
+      {% set ogImageValue = ogImage %}
+    {% else %}
+      {% set ogImageValue = site.url + ogImage %}
+    {% endif %}
+  {% else %}
+    {% set ogImageValue = site.url + site.socialImage %}
+  {% endif %}
   <meta property="og:type" content="{{ ogTypeValue }}">
   <meta property="og:title" content="{{ ogTitleValue }}">
   {% if ogDescriptionValue %}
@@ -100,10 +108,10 @@
   <meta name="twitter:image" content="{{ ogImageValue }}">
 
   {# ---------- Stylesheets + icons ---------- #}
-  <link rel="stylesheet" href="/css/chota.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="{{ '/css/chota.css' | bust }}">
+  <link rel="stylesheet" href="{{ '/css/style.css' | bust }}">
   {% if addJaStyles %}
-  <link rel="stylesheet" href="/css/style_ja.css">
+  <link rel="stylesheet" href="{{ '/css/style_ja.css' | bust }}">
   {% endif %}
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">

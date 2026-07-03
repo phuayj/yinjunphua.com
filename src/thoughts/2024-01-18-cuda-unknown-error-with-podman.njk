@@ -7,6 +7,9 @@ permalink: "/thoughts/2024-01-18-cuda-unknown-error-with-podman.html"
 date: 2024-01-18
 tags:
   - thoughts
+description: "CUDA programs failed with a useless 'Unknown error' inside a rootless Podman container even though nvidia-smi worked. The fix: the missing /dev/nvidia-uvm device nodes, and how to create them by hand."
+ogType: article
+ogTitle: "CUDA Unknown Error with Podman"
 ---
 {% block post %}
 <p>As I was setting up my new deep learning workstation with Debian 12, I found out that <a href="https://docs.nvidia.com/ai-enterprise/deployment-guide-rhel-with-kvm/0.1.0/podman.html" target="_blank" rel="nofollow">Nvidia now supports Podman</a>. With all kinds of bad rumors surrounding Docker, I decided to try out Podman.</p>

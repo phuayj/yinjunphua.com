@@ -19,6 +19,15 @@ module.exports = {
       span: "April 2025 - March 2029",
     },
     {
+      title: "Towards Reliable Generative AI by Separated Search State Control Mechanism",
+      url: "https://www.nii.ac.jp/research/upload/2026_NII_koubo-kyoudou_list.pdf",
+      role: "Principal Investigator",
+      amount: "￥ 1,120,000",
+      program: "Open Collaborative Research",
+      sponsor: "National Institute of Informatics",
+      span: "July 2026 - March 2027",
+    },
+    {
       title: "Discovering New Knowledge by Combining Symbolic Logic and Deep Learning",
       url: "https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-22K21302",
       role: "Principal Investigator",
@@ -82,6 +91,15 @@ module.exports = {
       program: "科学研究費助成事業 基盤研究(B)",
       sponsor: "日本学術振興会",
       span: "2025年4月 - 2029年3月",
+    },
+    {
+      title: "状態分離型探索制御機構による信頼できる生成AI推論基盤の実現",
+      url: "https://www.nii.ac.jp/research/upload/2026_NII_koubo-kyoudou_list.pdf",
+      role: "代表",
+      amount: "￥ 1,120,000",
+      program: "公募型共同研究",
+      sponsor: "国立情報学研究所",
+      span: "2026年7月 - 2027年3月",
     },
     {
       title: "記号論理と深層機械学習の統合による新たな知識を発見するAIに関する研究",

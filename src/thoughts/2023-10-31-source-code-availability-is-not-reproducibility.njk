@@ -7,6 +7,9 @@ permalink: "/thoughts/2023-10-31-source-code-availability-is-not-reproducibility
 date: 2023-10-31
 tags:
   - thoughts
+description: "Publicly available source code is not the same as reproducibility. On dependency rot, Python packaging defaults, the limits of Docker, and how fragile builds push AI research toward a narrow set of well-maintained models."
+ogType: article
+ogTitle: "Source Code Availability is not Reproducibility"
 ---
 {% block post %}
 <p>I recently tried to run some neural network code, written by other researchers, to understand how their method works. The code is publicly available on Github, with a well-written README on how to setup the environment and run the code. However, when I followed all of the instructions, I encountered a roadblock. One of the dependencies that the code relies on has deprecated some functions, causing the code to stop working altogether.</p>
