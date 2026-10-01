@@ -183,19 +183,26 @@
     "sameAs": [
       "{{ site.links.orcid }}",
       "{{ site.links.researchmapId }}",
+      "{{ site.links.scholar }}",
       "{{ site.links.dblp }}",
       "{{ site.links.github }}"
     ]
   }
   </script>
 </head>
-<body>
+<body class="site-layout">
   {% block content %}
   {{ content | safe }}
   {% endblock %}
   {% set emailObfuscated = emailObfuscatedOverride or page.emailObfuscated or site.emailObfuscated %}
   <footer class="text-center">
-    <p><a href="{{ site.links.orcid }}" target="_blank">ORCID</a> &bull; <a href="{{ researchmapLink }}" target="_blank">researchmap</a> &bull; <a href="{{ site.links.dblp }}" target="_blank">dblp</a> &bull; <a href="{{ site.links.github }}" target="_blank">Github</a></p>
+    <p class="link-row">
+      <a href="{{ site.links.orcid }}" target="_blank">ORCID</a>
+      <a href="{{ researchmapLink }}" target="_blank">researchmap</a>
+      <a href="{{ site.links.scholar }}" target="_blank">Google Scholar</a>
+      <a href="{{ site.links.dblp }}" target="_blank">dblp</a>
+      <a href="{{ site.links.github }}" target="_blank">Github</a>
+    </p>
     <p>{% if lang == 'ja' %}メールの連絡は {{ emailObfuscated | safe }} まで{% else %}You can contact me at {{ emailObfuscated | safe }}{% endif %}</p>
     <h5>&copy; Yin Jun Phua</h5>
   </footer>

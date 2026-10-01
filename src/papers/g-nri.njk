@@ -1,0 +1,181 @@
+---
+permalink: /papers/g-nri/
+lang: en
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>G-NRI: Symmetry-Aware Neural Rule Induction (NeSy 2026)</title>
+  <meta name="description" content="G-NRI is a symmetry-aware extension of NRI for zero-shot logical rule induction, with changes to the architecture, training, and rule export. Accepted at NeSy 2026.">
+  <link rel="canonical" href="{{ site.url }}/papers/g-nri/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="G-NRI: Symmetry-Aware Neural Rule Induction (NeSy 2026)">
+  <meta property="og:description" content="A symmetry-aware extension of NRI for zero-shot logical rule induction. Architecture, scaling experiments, and benchmark results. Accepted at NeSy 2026.">
+  <meta property="og:url" content="{{ site.url }}/papers/g-nri/">
+  <meta property="og:image" content="{{ site.url }}/papers/g-nri/assets/pipeline.png">
+  <meta property="og:image:width" content="1110">
+  <meta property="og:image:height" content="310">
+  <meta property="og:image:alt" content="G-NRI: a symmetry-aware encoder and canonical export turn examples into logical rules.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="citation_title" content="{{ gnri.title }}">
+  <meta name="citation_author" content="Phua, Yin Jun">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="20th International Conference on Neurosymbolic Learning and Reasoning (NeSy 2026)">
+  <meta name="citation_pdf_url" content="{{ site.url }}/papers/g-nri/paper.pdf">
+  <meta name="citation_arxiv_id" content="2608.00383">
+  <meta name="citation_doi" content="10.48550/arXiv.2608.00383">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/papers/g-nri/assets/style.css' | bust }}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "name": {{ gnri.title | dump | safe }},
+    "url": "{{ site.url }}/papers/g-nri/",
+    "identifier": "arXiv:2608.00383",
+    "datePublished": "2026-08-01",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Person",
+      "name": "Yin Jun Phua",
+      "url": "{{ site.url }}/",
+      "affiliation": { "@type": "CollegeOrUniversity", "name": "Institute of Science Tokyo" }
+    },
+    "sameAs": ["{{ gnri.arxiv }}", "https://doi.org/10.48550/arXiv.2608.00383"],
+    "isBasedOn": "{{ site.url }}/papers/nri/",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "encoding": {
+      "@type": "MediaObject",
+      "contentUrl": "{{ site.url }}/papers/g-nri/paper.pdf",
+      "encodingFormat": "application/pdf"
+    }
+  }
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#overview">Skip to content</a>
+<header class="hero">
+  <div class="container">
+    <span class="venue">Accepted at NeSy 2026</span>
+    <h1>Symmetry-Aware Foundation Model <br>for Logic Rule Induction</h1>
+    <p class="authors"><a href="/">Yin Jun Phua</a></p>
+    <a class="affil" href="https://www.isct.ac.jp/en" aria-label="Institute of Science Tokyo">
+      <img src="/papers/nri/assets/isct-lockup.png" alt="Institute of Science Tokyo">
+    </a>
+    <div class="links">
+      <a href="paper.pdf">Paper + appendix (PDF)</a>
+      <a class="alt" href="{{ gnri.arxiv }}">arXiv</a>
+      <a class="alt" href="{{ gnri.code }}">Code</a>
+      <a class="alt" href="#bibtex">BibTeX</a>
+    </div>
+    <p class="lead"><strong>G-NRI</strong> is a symmetry-aware extension of <a href="/papers/nri/">NRI</a> for zero-shot logical rule induction. It is trained on synthetic Boolean formulas and produces explicit rules from examples in new datasets, without task-specific retraining.</p>
+    <div class="stats" aria-label="Research highlights">
+      <div class="stat"><strong>6–12</strong><span>variables during pretraining</span></div>
+      <div class="stat"><strong>1,024</strong><span>variables at evaluation</span></div>
+      <div class="stat"><strong>+{{ (gnri.mean.gnri - gnri.mean.nri) | round(1) }} pts</strong><span>mean accuracy across {{ gnri.benchmarks.length }} datasets</span></div>
+      <div class="stat"><strong>0</strong><span>extra learned parameters</span></div>
+    </div>
+  </div>
+</header>
+<main>
+  <section id="overview">
+    <div class="container">
+      <h2>How G-NRI works</h2>
+      <p>Reordering examples or renaming variables should not change the underlying inference problem. G-NRI incorporates these symmetries, together with polarity flips and label swaps, into rule induction.</p>
+      <p>The method extends <a href="/papers/nri/">NRI</a> through encoder changes, symmetrized training and evaluation, and canonical rule export. It retains the same model size and examples-to-rules interface.</p>
+      <div class="feature-grid">
+        <article>
+          <h3>Encoder symmetries</h3>
+          <p>The encoder is modified to respect variable-renaming and polarity symmetries, without increasing the number of learned parameters.</p>
+        </article>
+        <article>
+          <h3>Canonical rule export</h3>
+          <p>The export procedure preserves score symmetries when converting model outputs into a discrete logical rule.</p>
+        </article>
+        <article>
+          <h3>Label symmetry</h3>
+          <p>Label-swap averaging and a symmetrized training objective account for both label encodings in binary classification.</p>
+        </article>
+      </div>
+      <figure>
+        <a href="assets/pipeline.png" aria-label="Open the G-NRI architecture diagram at full size"><img src="assets/pipeline.png" width="1110" height="310" alt="Examples pass through a symmetry-aware NRI encoder and canonical rule export. Transforming the examples produces the corresponding transformation of the output rule."></a>
+        <figcaption>The five changes from NRI to G-NRI. From Figure 1 of the paper; <a href="assets/pipeline.png">open full-size diagram</a>.</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section id="scaling" class="tinted">
+    <div class="container">
+      <h2>Variable-count scaling</h2>
+      <p>We train on synthetic logic problems with 6–12 variables and evaluate the same frozen checkpoints on problems with up to 1,024 variables. The plots report accuracy on the conditioning examples and rule fidelity on held-out inputs.</p>
+      <div class="figure-grid">
+        <figure>
+          <a href="assets/scaling.png" aria-label="Open the full scaling figure"><img src="assets/support-scaling.png" width="735" height="375" loading="lazy" alt="Accuracy on the conditioning examples as variable count grows. At 1,024 variables, G-NRI reaches 89.4%, compared with 48.7% for the NRI baseline."></a>
+          <figcaption><strong>Support-set accuracy.</strong> At 1,024 variables, G-NRI achieves 89.4%, compared with 48.7% for the NRI baseline.</figcaption>
+        </figure>
+        <figure>
+          <a href="assets/scaling.png" aria-label="Open the full rule fidelity figure"><img src="assets/rule-fidelity.png" width="718" height="372" loading="lazy" alt="The exported rule's agreement with the target rule on fresh inputs. G-NRI stays above the NRI baseline at 32, 128, and 1,024 variables."></a>
+          <figcaption><strong>Held-out rule fidelity.</strong> Agreement between the exported rule and the target rule on fresh inputs.</figcaption>
+        </figure>
+      </div>
+      <div class="legend" aria-label="Chart legend">
+        <span><i aria-hidden="true"></i>G-NRI</span>
+        <span><i class="baseline" aria-hidden="true"></i>NRI baseline</span>
+        <span><i class="eqarch" aria-hidden="true"></i>Architecture changes only</span>
+      </div>
+      <p class="small-note">Panels (a) and (b) of Figure 2, across eight training seeds. The dotted line marks the training maximum of 12 variables. These experiments increase variable count within the same rule family. <a href="assets/scaling.png">View the full figure</a>.</p>
+    </div>
+  </section>
+  <section id="benchmarks">
+    <div class="container">
+      <h2>Benchmark results</h2>
+      <p>Across {{ gnri.benchmarks.length }} benchmark datasets, mean held-out accuracy is <strong>{{ gnri.mean.gnri.toFixed(1) }}% for G-NRI and {{ gnri.mean.nri.toFixed(1) }}% for NRI</strong>, using frozen weights for both models. The datasets include tabular classification, MONK's logic tasks, molecular features, and symbolic scene descriptions.</p>
+      <div class="rule-example">
+        <p><strong>Example rule</strong></p>
+        <p><code>¬body_shape_octagon ∧ ¬jacket_blue</code></p>
+        <p class="small-note">On MONK's-3, G-NRI returns this same two-literal rule across all eight seeds.</p>
+      </div>
+      <details>
+        <summary>Results on {{ gnri.benchmarks.length }} datasets</summary>
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Benchmark accuracy table, scroll horizontally on small screens">
+          <table>
+            <caption>Held-out accuracy (%), averaged over eight seeds. NRI and G-NRI use frozen weights; the decision tree is trained per dataset. Results from Table 4 of the G-NRI paper.</caption>
+            <thead><tr><th scope="col">Dataset</th><th scope="col">Variables</th><th scope="col">NRI</th><th scope="col">G-NRI</th><th scope="col">Decision tree</th></tr></thead>
+            <tbody>
+              {% for row in gnri.benchmarks %}
+              <tr><th scope="row">{{ row.name }}</th><td>{{ row.variables }}</td><td>{{ row.nri.toFixed(1) }}</td><td>{{ row.gnri.toFixed(1) }}</td><td>{{ row.tree.toFixed(1) }}</td></tr>
+              {% endfor %}
+            </tbody>
+            <tfoot><tr><th scope="row">Mean ({{ gnri.benchmarks.length }})</th><td>—</td><td>{{ gnri.mean.nri.toFixed(1) }}</td><td>{{ gnri.mean.gnri.toFixed(1) }}</td><td>{{ gnri.mean.tree.toFixed(1) }}</td></tr></tfoot>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+  <section id="code" class="tinted">
+    <div class="container">
+      <h2>Code and reproducibility</h2>
+      <p>The <a href="{{ gnri.code }}">G-NRI repository</a> includes synthetic training, rule export, benchmark evaluation, and scripts for the paper's tables and figures. Instructions are available for <a href="{{ gnri.code }}#quickstart-training-from-scratch-on-synthetic-data">CPU training</a> and <a href="{{ gnri.code }}/blob/master/REPRODUCIBILITY.md">experiment reproduction</a>.</p>
+      <p>For the original model and its results, visit the <a href="/papers/nri/">NRI project page</a>.</p>
+    </div>
+  </section>
+  <section id="bibtex">
+    <div class="container">
+      <h2>BibTeX</h2>
+      <pre><code>TBD &mdash; will be updated once the official NeSy 2026 proceedings are released and registered.</code></pre>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="container">
+    <p>Yin Jun Phua · Institute of Science Tokyo</p>
+    <p class="footer-links"><a href="/">Homepage</a><a href="/papers/nri/">NRI</a><a href="{{ gnri.code }}">G-NRI code</a><a href="mailto:phua@comp.isct.ac.jp">Get in touch</a></p>
+    <p class="small-note">Figures from <a href="{{ gnri.arxiv }}">Phua (2026)</a>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>; cropped for this page.</p>
+  </div>
+</footer>
+</body>
+</html>

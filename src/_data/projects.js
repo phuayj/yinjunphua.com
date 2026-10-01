@@ -19,7 +19,7 @@ module.exports = {
       span: "April 2025 - March 2029",
     },
     {
-      title: "Towards Reliable Generative AI by Separated Search State Control Mechanism",
+      title: "Towards Reliable Generative AI Reasoning by Separated Search State Control Mechanism",
       url: "https://www.nii.ac.jp/research/upload/2026_NII_koubo-kyoudou_list.pdf",
       role: "Principal Investigator",
       amount: "￥ 1,120,000",

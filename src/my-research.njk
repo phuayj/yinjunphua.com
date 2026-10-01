@@ -2,6 +2,7 @@
 layout: layouts/page.njk
 pageTitle: "My Research"
 lang: en
+description: "Research by Yin Jun Phua on symmetry-aware rule-induction foundation models, verification during backtracking search, active learning of gene regulatory logic, continual learning, and functional tests of consciousness theories."
 alternates:
   - hreflang: en
     href: "https://yinjunphua.com/my-research.html"
@@ -14,16 +15,27 @@ headingLink: "/"
 navRightHref: "/my-research.html"
 navRightLabel: "My Research"
 ---
-<h2>A Foundation Model for Zero-Shot Logical Rule Induction</h2>
+<p>My main research focus is on bridging the gap between symbolic AI and neural networks. Symbolic AI produces knowledge that is directly readable by humans, but is brittle and hard to scale; neural networks are robust and broadly applicable, but the knowledge they encode is hard to access. By combining both approaches, I aim to build AI systems whose knowledge humans can read, check, and build on. My current work ranges from foundation models that induce logical rules from data, to neural networks that learn when to backtrack during reasoning.</p>
+<p class="link-row">
+  <a href="#publications">Publications</a>
+  <a href="/about.html">Grants, talks, and background</a>
+</p>
+<h2 id="rule-induction">Foundation Models for Logical Rule Induction</h2>
 <div class="row">
   <div class="col-8" style="margin: auto">
     <picture>
       <img src="/papers/nri/assets/pipeline.png" alt="Neural Rule Inducer (NRI): a foundation model that performs zero-shot logical rule induction on new domains in a single forward pass">
     </picture>
   </div>
-  <p>Symbolic rule learners are interpretable, but they have to be retrained from scratch on every new dataset, overfit noisy labels, and transfer nothing from one problem to the next. To break this trade-off, we proposed the Neural Rule Inducer (NRI), a foundation model that performs logical rule induction in a single forward pass (Phua, <i>35th International Joint Conference on Artificial Intelligence</i>, 2026). Trained once on millions of randomly generated synthetic Boolean formulas, NRI induces interpretable DNF rules zero-shot on new tabular tasks, with no retraining, no fine-tuning, and no per-task weights. The key idea is to never look at variable names: each literal is described by 18 identity-free statistics, and a slot-based decoder synthesizes candidate clauses in parallel, so the model is invariant to both predicate identity and clause order. The entire pipeline from raw episode to predicted label is differentiable, executed under the product T-norm, and discretizes into a symbolic DNF at inference time.</p>
-  <p>Applied directly to 14 UCI tabular tasks, a single NRI checkpoint produces short, readable rules that align with domain knowledge — including the clinically plausible plasma-glucose-and-age signature on the Pima diabetes dataset, and the canonical odor-based predictor on the mushroom benchmark. NRI also degrades smoothly under label noise where classical rule learners collapse, and stays above 92% accuracy even when 32 spurious distractor features are added at correlation 0.9. More details and code are available on the <a href="/papers/nri/">project page</a>.</p>
 </div>
+<p>Symbolic rule learners such as decision trees, RIPPER, and inductive logic programming (ILP) are interpretable, but they have to be retrained from scratch on every new dataset, and transfer nothing from one problem to the next. Rather than training a model for each task, we want a model that learns how to discover rules. To this end, we proposed the <a href="/papers/nri/">Neural Rule Inducer (NRI)</a>, a foundation model for logical rule induction (Phua, <i>35th International Joint Conference on Artificial Intelligence</i>, 2026). NRI is trained once on randomly generated logic problems, and then induces human-readable rules from the examples of a new dataset without retraining. The resulting rules describe which combinations of features lead to an outcome. Since they are executable logic, they can be inspected by humans and reused in other systems.</p>
+<h3>Scaling to Larger Problems through Symmetry</h3>
+<p>Renaming the variables of a logic problem does not change the problem itself. By exploiting symmetries inherent in logic such as this one, we proposed <a href="/papers/g-nri/">G-NRI</a>, which lets NRI transfer what it learned on small problems to much larger ones (Phua, <i>20th International Conference on Neurosymbolic Learning and Reasoning</i>, 2026, accepted). A model trained on problems with 6–12 variables was applied without retraining to problems with up to 1,024 variables, improving on the original NRI. We are now investigating how far generalization can be pushed by building the structure of logic into the learning itself.</p>
+<h2 id="backtracking">Learning When to Backtrack</h2>
+<p>When reasoning involves search, a model can follow a long reasoning trace and still fail to notice that it has reached a dead end and needs to go back. In collaboration with Tony Ribeiro, Tuan Nguyen, and Katsumi Inoue, we study how neural networks can learn this decision (<a href="https://arxiv.org/abs/2605.22221">Can Transformers Learn to Verify During Backtracking Search?</a>, 2026 preprint). We found that the information needed for the decision can get buried in the trace, and that earlier search steps can distract the model from the state it is actually in.</p>
+<p>In our approach, we make the current state explicit, and use <strong>Selective State Attention (SSA)</strong> to restrict attention to that state and the problem at hand. Across logic, planning, and parsing tasks, this helps models learn to backtrack in response to contradictions, instead of simply continuing the trace. We aim to extend this toward systems that can notice and recover from their own mistakes.</p>
+<h2 id="able">Choosing Experiments to Recover Gene Regulatory Rules</h2>
+<p>In collaboration with Foo Wei Ten, we are working on AI that not only learns from experiments, but also chooses which experiment to perform next. <a href="https://openreview.net/forum?id=JUMIngxwNC">ABLE (Active Boolean Learning Engine)</a> proposes candidate rules for gene regulation, checks them against observations, and selects the experiment that would distinguish the remaining candidates (Phua and Ten, <i>ICML 2026 AI for Science Workshop</i>, 2026). We evaluate this loop on simulations of biological Boolean models. Rather than returning a single rule and stopping, the system uses what is still unknown to decide what to investigate next.</p>
 <h2>Learning Logic Programs from Dynamic Systems</h2>
 <div class="row">
   <div class="col-5">
@@ -54,9 +66,9 @@ navRightLabel: "My Research"
       <img src="/images/sddr-2023.png" alt="Leveraging generative models like Stable Diffusion to perform class-incremental learning">
     </picture>
   </div>
-  <p>Statistical machine learning methods like neural networks are known to suffer from catastrophic forgetting: training a model on a new task tends to erase what it learned on previous ones. The field that studies this phenomenon and its mitigation is called incremental learning. One branch of it considers classification, where at each training step only a limited number of classes are available. Many methods have been proposed with various degrees of success, and the one we consider combines knowledge distillation — training a model to retain knowledge from another model — with replay memory, a fixed-size buffer of examples from previous classes. Previous methods populate this buffer with instances from the training set, but the limited memory budget caps how many instances can be retained, which limits performance. In this work, we proposed replacing the replay memory with widely available generative models, and devised a method for prompting the generative model to obtain relevant images. This improved existing methods by 1~3%, and we also found there is a sweet spot between the final accuracy and the number of images sampled from the generative model.</p>
-  <p>Results of this work have been published in the workshop paper (Jodelet, et al. <i>1st Workshop on Visual Continual Learning</i>, 2023), which was chosen for the best paper award.</p>
 </div>
+<p>Statistical machine learning methods like neural networks are known to suffer from catastrophic forgetting: training a model on a new task tends to erase what it learned on previous ones. The field that studies this phenomenon and its mitigation is called incremental learning. One branch of it considers classification, where at each training step only a limited number of classes are available. Many methods have been proposed with various degrees of success, and the one we consider combines knowledge distillation — training a model to retain knowledge from another model — with replay memory, a fixed-size buffer of examples from previous classes. Previous methods populate this buffer with instances from the training set, but the limited memory budget caps how many instances can be retained, which limits performance. In this work, we proposed replacing the replay memory with widely available generative models, and devised a method for prompting the generative model to obtain relevant images. This improved existing methods by 1~3%, and we also found there is a sweet spot between the final accuracy and the number of images sampled from the generative model.</p>
+<p>Results of this work have been published in the workshop paper (Jodelet, et al. <i>1st Workshop on Visual Continual Learning</i>, 2023), which was chosen for the best paper award. Our subsequent journal papers include <a href="https://doi.org/10.1016/j.imavis.2025.105600">Memory augmented using diffusion model for class-incremental learning</a> (<i>Image and Vision Computing</i>, 2025) and <a href="https://doi.org/10.1007/s00138-024-01635-y">Future-proofing class-incremental learning</a> (<i>Machine Vision and Applications</i>, 2025), with Quentin Jodelet, Xin Liu, and Tsuyoshi Murata.</p>
 <h2>Consistent Identification of Gene Sets from Cell Sequencing Data</h2>
 <div class="row">
   <div class="col-4">
@@ -71,6 +83,9 @@ navRightLabel: "My Research"
     <p>Results of this work were published in the journal paper (Ten, et al. <i>Frontiers in Cell and Developmental Biology 11</i>, 2023).</p>
   </div>
 </div>
+<h2 id="consciousness">Testing Consciousness Theories on Artificial Agents</h2>
+<p>I am also interested in what theories of consciousness can tell us about intelligence. In this work, we built artificial agents with mechanisms inspired by these theories, and removed individual components to observe what changes (<a href="https://arxiv.org/abs/2512.19155">Can We Test Consciousness Theories on AI? Ablations, Markers, and Robustness</a>, 2025 preprint). The experiments measure how the agents share information, judge their own confidence, and cope with internal noise. This allows ideas about cognition to be examined on systems that we can directly experiment with.</p>
+{% include "partials/publications.njk" %}
 <hr />
-<p class="text-grey text-center">Have questions or want to know more about my research work? You can always contact me by email.</p>
+<p class="text-grey text-center">Have questions, or want to know more about any of this work? Feel free to email me at <span class="text-dark email-nowrap">{{ site.emailObfuscated | safe }}</span>.</p>
 <p><a href="/">&laquo; Back to home</a></p>

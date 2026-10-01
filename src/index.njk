@@ -1,7 +1,7 @@
 ---
 layout: layouts/page.njk
 lang: en
-description: "Yin Jun Phua, Assistant Professor at Institute of Science Tokyo. Research on neuro-symbolic AI: bridging symbolic AI and neural networks through foundation models for logical rule induction, inductive logic programming (ILP), explainable AI (XAI), and rule learning from time series."
+description: "Yin Jun Phua, Assistant Professor at Institute of Science Tokyo. Research on neuro-symbolic AI: bridging symbolic AI and neural networks through foundation models for logical rule induction and neural networks that learn when to backtrack during reasoning."
 alternates:
   - hreflang: en
     href: "https://yinjunphua.com/"
@@ -15,10 +15,14 @@ navRightLabel: "My Research"
 ---
 <div class="row home-hero">
   <div class="col-10">
-    <p><strong>Assistant Professor</strong> <span class="text-grey">at</span> Institute of Science Tokyo <span class="text-grey">since</span> October 2024.</p>
-    <p><span class="text-grey">My main research focus is on</span> bridging the gap between <strong>symbolic AI</strong> and <strong>neural networks</strong>.</p>
-    <p class="text-grey">During my Ph.D., I developed deep learning techniques that extract symbolic rules from time series data. These rules explain the observed data and can be used to predict and manipulate dynamic systems — a step toward explainable AI systems that provide human-accessible insights into complex behaviour.</p>
-    <p class="text-grey">I am now developing techniques that combine the strengths of both worlds. Symbolic AI produces knowledge that is directly readable by humans, but is brittle and hard to scale; neural networks are robust and broadly applicable, but the knowledge they encode is hard to access. By combining both approaches I aim to build intelligent systems that are simultaneously robust enough for real-world deployment and transparent enough to teach us something. Most recently, this led to the <a href="/papers/nri/">Neural Rule Inducer (NRI)</a>, a foundation model that induces human-readable logical rules on new datasets in a single forward pass, accepted to IJCAI 2026.</p>
+    <p><span class="text-grey">I'm an</span> <strong>Assistant Professor</strong> <span class="text-grey">at</span> Institute of Science Tokyo <span class="text-grey">(since October 2024).</span></p>
+    <p><span class="text-grey">I work on</span> bridging the gap between <strong>symbolic AI</strong> and <strong>neural networks</strong>.</p>
+    <p class="text-grey">I'd like the knowledge AI learns to be something people can read, check, and correct. Right now, I'm building foundation models that find logical rules in new datasets without retraining, and studying how neural networks can learn when to backtrack during reasoning.</p>
+    <p class="link-row">
+      <a href="{{ site.links.scholar }}">Google Scholar</a>
+      <a href="{{ site.links.researchmap.en }}">researchmap</a>
+      <a href="/about.html">Background &amp; activities</a>
+    </p>
   </div>
   <div class="col-2 home-hero-photo">
     <picture>
@@ -28,165 +32,36 @@ navRightLabel: "My Research"
     </picture>
   </div>
 </div>
-<p><span class="text-grey">Research areas: </span>neuro-symbolic AI, foundation models, logical rule induction, inductive logic programming (ILP), deep learning, explainable AI (XAI), time series analysis, and robustness.</p>
-<p class="text-grey">Have interesting projects or want to have some discussion? You can contact me at <span class="text-dark email-nowrap">phua<span class="replace"> [at] </span>comp.isct.ac.jp</span></p>
-<h2>Goal</h2>
-<p class="text-grey">Neural networks now drive most of AI, but the knowledge they acquire remains impenetrable to the people who rely on them. My long-term goal is to make that knowledge <strong class="text-dark">readable</strong>, <strong class="text-dark">auditable</strong>, and <strong class="text-dark">correctable</strong> — so that a doctor, an engineer, or a scientist can see what a model has learned, challenge it, and build on it. Toward this, I am developing foundation models that learn generalizable, interpretable knowledge from background knowledge and limited data, and logical reasoning techniques that make generative AI reliable.</p>
-<h2>Selected Publications</h2>
-{% for pub in publications.en %}
-<p>
-  <a target="_blank" href="{{ pub.url }}">{{ pub.title }}</a>{% if pub.note %} {{ pub.note }}{% endif %}{% if pub.arxiv %} <a target="_blank" href="{{ pub.arxiv }}">[arXiv]</a>{% endif %}<br>
-  {{ pub.authors | safe }}<br>
-  <span class="text-grey">{{ pub.venue }}</span>
-</p>
-{% endfor %}
-<p><a target="_blank" href="{{ site.links.dblp }}">Full publication list on dblp &raquo;</a></p>
-<h2>Research Projects/Grants</h2>
-{% for proj in projects.en %}
-<p>
-  <a target="_blank" href="{{ proj.url }}">{{ proj.title }}</a><br>
-  <strong>{{ proj.role }}</strong> <small class="text-grey">{{ proj.amount }}</small><br>
-  {{ proj.program }},<br>
-  {{ proj.sponsor }}<br>
-  <span class="text-grey">{{ proj.span }}</span>
-</p>
-{% endfor %}
-<div class="row">
-  <div class="col-12">
-    <h2>Invited Talks</h2>
-    <div class="row">
-      <div class="col-2">Aug 27, 2025</div>
-      <div class="col-10"><a href="https://sig-fpai.org/past/fpai133.html" target="_blank">133rd SIG-FPAI</a> Leveraging Symbolic Invariance in Neuro-Symbolic AI <a href="/files/toyama-250826.pdf">[Slides]</a> (Japanese)</div>
-    </div>
-  </div>
-  <div class="col">
-    <h2>Education</h2>
-    <div class="row">
-      <div class="col-5">April 2019 - March 2022</div>
-      <div class="col-7">
-        Department of Informatics,<br>School of Multidisciplinary Sciences,<br>The Graduate University for Advanced Studies
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-5">April 2017 - March 2019</div>
-      <div class="col-7">
-        Department of Informatics,<br>School of Computing,<br>Tokyo Institute of Technology
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-5">April 2013 - March 2017</div>
-      <div class="col-7">
-        Department of Computer Science,<br>School of Engineering,<br>Tokyo Institute of Technology
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-5">April 2012 - March 2013</div>
-      <div class="col-7">
-        Japanese Language Center for International Students,<br>
-        Tokyo University of Foreign Studies
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <h2>Research History</h2>
-    <div class="row">
-      <div class="col-5">October 2024 - Present</div>
-      <div class="col-7">Assistant Professor,<br><a href="http://www.net.comp.isct.ac.jp/" target="_blank">Murata Laboratory</a>,<br>School of Computing,<br>Institute of Science Tokyo</div>
-    </div>
-    <div class="row">
-      <div class="col-5">April 2022 - September 2024</div>
-      <div class="col-7">Assistant Professor,<br><a href="http://www.net.c.titech.ac.jp/" target="_blank">Murata Laboratory</a>,<br>School of Computing,<br>Tokyo Institute of Technology</div>
-    </div>
-    <div class="row">
-      <div class="col-5">April 2021 - March 2022</div>
-      <div class="col-7">
-        Research fellowship (DC2),<br>Japan Society for the Promotion of Science
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-5">April 2019 - March 2021</div>
-      <div class="col-7">
-        Special Research Assistant,<br><a href="http://research.nii.ac.jp/il/" target="_blank">Inoue Laboratory</a>,<br>National Institute of Informatics
-      </div>
-    </div>
-  </div>
+<h2>Current Research</h2>
+<div class="row research-spotlights">
+  <article class="col-6 research-spotlight" aria-labelledby="spotlight-rules">
+    <h3 id="spotlight-rules">Learning to Discover Rules</h3>
+    <p>Classic rule learners start from scratch on every new dataset. I'm building models that instead learn how to find the rules behind the data.</p>
+    <p class="text-grey">NRI is trained once on randomly generated logic problems, then finds human-readable rules in new datasets without any retraining. G-NRI builds the symmetries of logic into the model, which lets it take on problems with over a thousand variables.</p>
+    <p><a href="/papers/nri/">NRI · IJCAI 2026</a><br>
+    <a href="/papers/g-nri/">G-NRI · NeSy 2026 (accepted)</a></p>
+    <a href="/my-research.html#rule-induction">Read more &raquo;</a>
+  </article>
+  <article class="col-6 research-spotlight" aria-labelledby="spotlight-search">
+    <h3 id="spotlight-search">Learning When to Backtrack</h3>
+    <p>Reasoning often means searching: you hit a dead end, go back, and try another path.</p>
+    <p class="text-grey">With my collaborators, I'm studying how neural networks can learn when to do this. We found that showing the model its current search state, separated from all the earlier steps, makes backtracking easier to learn.</p>
+    <p><a href="https://arxiv.org/abs/2605.22221">Can Transformers Learn to Verify During Backtracking Search? · 2026 preprint</a></p>
+    <a href="/my-research.html#backtracking">Read more &raquo;</a>
+  </article>
 </div>
-<div class="row">
-  <div class="col-6">
-    <h2>Awards</h2>
-    <div class="row">
-      <div class="col-2">
-        2023
-      </div>
-      <div class="col-10">
-        Tokyo Tech Best Teacher Award (Joint Award)
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2">
-        2019
-      </div>
-      <div class="col-10">
-        Best Student Paper Award, ILP 2019
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-2">
-        2012
-      </div>
-      <div class="col-10">
-        MEXT Scholarship for Embassy Recommendation (Undergraduate)
-      </div>
-    </div>
-  </div>
-  <div class="col-6">
-    <h2>Lectures</h2>
-    <div class="row">
-      <div class="col-3">
-        2025
-      </div>
-      <div class="col-9">
-        <a target="_blank" href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2025/">Advanced Procedural Programming (Japanese)</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-3">
-        2024
-      </div>
-      <div class="col-9">
-        <a target="_blank" href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2024">Advanced Procedural Programming (Japanese)</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-3">
-        2023
-      </div>
-      <div class="col-9">
-        <a target="_blank" href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2023">Advanced Procedural Programming (Japanese)</a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-3">
-        2022-2024
-      </div>
-      <div class="col-9">
-        Doctoral Forum on Computing
-      </div>
-    </div>
-  </div>
+<p class="link-row">
+  <a href="/my-research.html">More research</a>
+  <a href="/my-research.html#publications">Selected publications</a>
+</p>
+<h2>Thoughts</h2>
+{% set englishThoughts = collections.thoughts | where("data.lang", "en") | reverse %}
+{% for post in englishThoughts.slice(0, 3) %}
+<div class="row list-row">
+  <div class="col-2">{{ post.date | readableDate }}</div>
+  <div class="col-10"><a href="{{ post.url }}">{{ post.data.heading or post.data.title }}</a></div>
 </div>
+{% endfor %}
+<p><a href="/about.html#notes">All thoughts &raquo;</a></p>
 <hr />
-<div class="row">
-  <div class="col">
-    <h2>Thoughts</h2>
-    <p>Some of my personal notes, with regards to research or education.</p>
-    {% set englishThoughts = collections.thoughts | where("data.lang", "en") | reverse %}
-    {% for post in englishThoughts %}
-    {% set listTitle = post.data.heading or post.data.title %}
-    <div class="row">
-      <div class="col-2">{{ post.date | readableDate }}</div>
-      <div class="col-10"><a href="{{ post.url }}">{{ listTitle }}</a></div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
+<p class="text-grey">If you're working on something related, or just want to chat about an idea, feel free to email me at <span class="text-dark email-nowrap">{{ site.emailObfuscated | safe }}</span>.</p>

@@ -1,0 +1,16 @@
+<section aria-labelledby="publications">
+<h2 id="publications">{% if lang == 'ja' %}主な業績{% else %}Selected Publications &amp; Preprints{% endif %}</h2>
+{% for pub in publications[lang] %}
+<p class="list-entry">
+  <a href="{{ pub.url }}">{{ pub.title }}</a>{% if pub.note %} {{ pub.note }}{% endif %}{% if pub.arxiv %} <a href="{{ pub.arxiv }}">[arXiv]</a>{% endif %}<br>
+  {{ pub.authors | safe }}<br>
+  <span class="text-grey">{{ pub.venue }}</span>
+</p>
+{% endfor %}
+<p class="link-row">
+  <span>{% if lang == 'ja' %}業績と研究活動の一覧：{% else %}More publications and activities:{% endif %}</span>
+  <a href="{{ site.links.scholar }}">Google Scholar</a>
+  <a href="{{ site.links.researchmap[lang] }}">researchmap</a>
+  <a href="{{ site.links.dblp }}">dblp</a>
+</p>
+</section>

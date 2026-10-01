@@ -2,13 +2,143 @@
 	--color-primary: #367cb3;
 }
 
+/* Fill short viewports without fixing the footer over long-page content. */
+.site-layout {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	min-height: 100dvh;
+}
+
+.site-layout > .container {
+	flex: 1 0 auto;
+}
+
+.site-layout > footer {
+	flex-shrink: 0;
+}
+
+/* ---------- Page spacing (leave long-form post typography unchanged) ---------- */
+.site-page {
+	--grid-gutter: 3.2rem;
+	padding-inline: clamp(1.8rem, 2.5vw, 3.2rem);
+}
+
+/* Let the title use the available width instead of splitting the nav in half. */
+.site-page > .nav {
+	column-gap: var(--grid-gutter);
+}
+
+.site-page .nav-left {
+	min-width: 0;
+}
+
+.site-page .nav-right {
+	flex: 0 0 auto;
+}
+
+/* Wrap the subtitle as a unit, so Japanese titles do not break mid-word. */
+.site-page .nav-left small {
+	display: inline-block;
+}
+
+/* Chota uses the horizontal gutter for bottom margins too; separate the axes. */
+.site-page .row > .col,
+.site-page .row > [class*="col-"] {
+	margin-bottom: 0.6rem;
+}
+
+.site-page p {
+	margin-bottom: 1rem;
+}
+
+.site-page h2,
+.site-page h3 {
+	margin: 0.3em 0 0.45em;
+}
+
+/* List spacing includes both the row margin and Chota's column margins. */
+.site-page .row.mb-8,
+.site-page .list-row,
+.site-page .list-entry {
+	line-height: 1.4;
+}
+
+/* Single-line rows stay compact; multi-line entries (grants, talks, publications, career) need clearer separation. */
+.site-page .list-row {
+	margin-bottom: 0.4rem;
+}
+
+.site-page .row.mb-8,
+.site-page .list-entry {
+	margin-bottom: 1rem;
+}
+
+/* Keep "All thoughts" / "Back to home" links from touching the list above. */
+.site-page .list-row + p,
+.site-page .list-row + .link-row {
+	margin-top: 1.2rem;
+}
+
+/* Date and title stack on phones, so separate the stacked pairs. */
+@media screen and (max-width: 599px) {
+	.site-page .list-row {
+		margin-bottom: 0.8rem;
+	}
+}
+
+/* On tablets, the 2/12 date column is too narrow for dates like "May 11, 2026". */
+@media screen and (min-width: 600px) and (max-width: 1023px) {
+	.site-page > .list-row > .col-2,
+	.site-page > .row.mb-8 > .col-2 {
+		flex: 0 0 14rem;
+		max-width: 14rem;
+		white-space: nowrap;
+	}
+
+	.site-page > .list-row > .col-10,
+	.site-page > .row.mb-8 > .col-10 {
+		flex: 1 1 0;
+		max-width: none;
+	}
+}
+
+.site-page .row.mb-8 > div,
+.site-page .row.list-row > div {
+	margin-bottom: 0;
+}
+
+/* Space the links themselves, not just the page or grid columns. */
+.link-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.2rem 3.2rem;
+}
+
+footer .link-row {
+	justify-content: center;
+}
+
 footer {
 	background-color: #efefef;
-	padding: 6rem 2rem;
-	margin-top: 4rem;
+	padding: 3rem 2.4rem;
+	margin-top: 2.4rem;
+}
+
+footer p {
+	margin-bottom: 1rem;
+}
+
+footer > :last-child {
+	margin-bottom: 0;
 }
 
 /* ---------- Home page hero (profile photo + bio) ---------- */
+.home-hero-photo img {
+	display: block;
+}
+
 /* Desktop / tablet: bio left (col-10), photo right (col-2) — default row layout */
 /* Mobile: photo first (centered, capped), bio second */
 @media screen and (max-width: 599px) {
@@ -17,9 +147,19 @@ footer {
 	}
 	.home-hero-photo img {
 		max-width: 14rem;
-		display: block;
-		margin: 0 auto 1rem auto;
+		margin: 0 auto 0.6rem;
 	}
+}
+
+/* ---------- Homepage research spotlights ---------- */
+.research-spotlight {
+	border-top: 2px solid var(--color-primary);
+	padding-top: 1rem;
+	padding-bottom: 0.8rem;
+}
+
+.site-page .research-spotlight h3 {
+	margin-top: 0;
 }
 
 /* ---------- Mobile typography & spacing tweaks ---------- */
@@ -31,9 +171,8 @@ footer {
 	h1 { font-size: 1.75em; }
 	h2 { font-size: 1.4em; }
 	h3 { font-size: 1.2em; }
-	/* Tighten the very generous footer padding on small screens */
 	footer {
-		padding: 3rem 1.5rem;
+		padding: 2rem 1.8rem;
 	}
 	/* Prevent the email address from breaking awkwardly mid-token */
 	.email-nowrap {

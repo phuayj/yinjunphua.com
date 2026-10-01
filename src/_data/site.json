@@ -34,6 +34,10 @@
     "Explainable AI",
     "Foundation models",
     "Logical rule induction",
+    "Symmetry-aware learning",
+    "Backtracking search",
+    "Verifiable reasoning",
+    "AI for science",
     "Deep learning",
     "Machine learning",
     "Time series analysis"
@@ -56,6 +60,7 @@
       "ja": "https://researchmap.jp/phuayj?lang=ja"
     },
     "researchmapId": "https://researchmap.jp/phuayj",
+    "scholar": "https://scholar.google.com/citations?user=XOBpuB8AAAAJ",
     "dblp": "https://dblp.org/pid/217/3830.html",
     "github": "https://github.com/phuayj"
   },

@@ -1,0 +1,113 @@
+---
+layout: layouts/page.njk
+pageTitle: "経歴と研究活動"
+lang: ja
+description: "ポア　インジュンの経歴，競争的資金，講演，講義，受賞，メモ帳．"
+alternates:
+  - hreflang: en
+    href: "https://yinjunphua.com/about.html"
+  - hreflang: ja
+    href: "https://yinjunphua.com/ja/about.html"
+permalink: "/ja/about.html"
+headingText: "ポア　インジュン"
+headingSmall: "経歴と研究活動"
+headingLink: "/ja/"
+navRightHref: "/ja/my-research.html"
+navRightLabel: "私の研究"
+addJaStyles: true
+---
+<p>2024年10月から，東京科学大学で助教をしています．博士課程では，時系列データから記号論理規則を学習する機械学習手法に取り組んでいました．このページには，競争的資金や講演，講義などの活動をまとめています．</p>
+<p class="link-row">
+  <a href="/ja/my-research.html#publications">業績と研究紹介</a>
+  <a href="{{ site.links.researchmap.ja }}">researchmapのプロフィール</a>
+</p>
+<h2>競争的資金・共同研究</h2>
+{% for proj in projects.ja %}
+<p class="list-entry">
+  <a target="_blank" href="{{ proj.url }}">{{ proj.title }}</a><br>
+  <strong>{{ proj.role }}</strong> <small class="text-grey">{{ proj.amount }}</small><br>
+  {{ proj.program }}<br>
+  {{ proj.sponsor }}<br>
+  <span class="text-grey">{{ proj.span }}</span>
+</p>
+{% endfor %}
+<h2>講演と発表</h2>
+{% for talk in presentations.ja %}
+<div class="row mb-8">
+  <div class="col-2">{{ talk.date }}</div>
+  <div class="col-10">
+    <a href="{{ talk.url }}" target="_blank">{{ talk.title }}</a>{% if talk.slides %} <a href="{{ talk.slides }}">[スライド]</a>{% endif %}<br>
+    {{ talk.authors }}<br>
+    <span class="text-grey">{{ talk.venue }}{% if talk.note %}（{{ talk.note }}）{% endif %}</span>
+  </div>
+</div>
+{% endfor %}
+<h2>学会活動</h2>
+<p><a href="https://researchmap.jp/phuayj/committee_memberships/51051074">International Conference on Neurosymbolic Learning and Reasoning（NeSy）プログラム委員</a><br><span class="text-grey">2024年 - 現在</span></p>
+<div class="row">
+  <div class="col">
+    <h2>学歴</h2>
+    <div class="row mb-8">
+      <div class="col-5">2019年4月 - 2022年3月</div>
+      <div class="col-7">博士（情報学）<br>総合研究大学院大学<br>複合科学研究科<br>情報学専攻</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">2017年4月 - 2019年3月</div>
+      <div class="col-7">東京工業大学<br>情報理工学院<br>情報工学コース</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">2013年4月 - 2017年3月</div>
+      <div class="col-7">東京工業大学<br>情報工学部<br>情報工学科</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">2012年4月 - 2013年3月</div>
+      <div class="col-7">東京外国語大学<br>留学生日本語教育センター</div>
+    </div>
+  </div>
+  <div class="col">
+    <h2>職歴</h2>
+    <div class="row mb-8">
+      <div class="col-5">2024年10月 - 現在</div>
+      <div class="col-7">東京科学大学<br>情報理工学院<br><a href="http://www.net.comp.isct.ac.jp/">村田研究室</a><br>助教</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">2022年4月 - 2024年9月</div>
+      <div class="col-7">東京工業大学<br>情報理工学院<br><a href="http://www.net.c.titech.ac.jp/">村田研究室</a><br>助教</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">2021年4月 - 2022年3月</div>
+      <div class="col-7">独立行政法人日本学術振興会<br>特別研究員（DC2）</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">2019年4月 - 2021年3月</div>
+      <div class="col-7">国立情報学研究所<br><a href="http://research.nii.ac.jp/il/">井上研究室</a><br>特別リサーチアシスタント</div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h2>受賞</h2>
+    <div class="row mb-8"><div class="col-2">2023年</div><div class="col-10">東工大教育賞　優秀賞（共同受賞）</div></div>
+    <div class="row mb-8"><div class="col-2">2023年</div><div class="col-10">最優秀論文賞，1st Workshop on Visual Continual Learning，ICCV 2023</div></div>
+    <div class="row mb-8"><div class="col-2">2019年</div><div class="col-10">最優秀学生論文賞，ILP 2019</div></div>
+    <div class="row mb-8"><div class="col-2">2012年</div><div class="col-10">大使館推薦による文部科学省国費外国人（学部留学生）</div></div>
+  </div>
+  <div class="col">
+    <h2>講義</h2>
+    <div class="row mb-8"><div class="col-3">2025</div><div class="col-9"><a href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2025">手続き型プログラミング発展</a></div></div>
+    <div class="row mb-8"><div class="col-3">2024</div><div class="col-9"><a href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2024">手続き型プログラミング発展</a></div></div>
+    <div class="row mb-8"><div class="col-3">2023</div><div class="col-9"><a href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2023">手続き型プログラミング発展</a></div></div>
+    <div class="row mb-8"><div class="col-3">2022-2024</div><div class="col-9">情報理工学フォーラム</div></div>
+  </div>
+</div>
+<h2 id="notes">メモ帳</h2>
+<p>研究や教育に関して思うところ．主にひとりごと．</p>
+{% set japaneseThoughts = collections.thoughts | where("data.lang", "ja") | reverse %}
+{% for post in japaneseThoughts %}
+<div class="row list-row">
+  <div class="col-2">{{ post.date | readableDateJa }}</div>
+  <div class="col-10"><a href="{{ post.url }}">{{ post.data.heading or post.data.title }}</a></div>
+</div>
+{% endfor %}
+<p><a href="/about.html#notes">英語のメモ一覧</a></p>
+<p><a href="/ja/">&laquo; ホームに戻る</a></p>

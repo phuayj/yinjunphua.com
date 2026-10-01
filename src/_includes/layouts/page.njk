@@ -1,14 +1,16 @@
 {% extends "layouts/base.njk" %}
 
 {% block content %}
-<div class="container">
+<div class="container site-page">
   <div class="row">
     <div class="col">
       <div class="pull-right">
         {% if lang == 'ja' %}
-        <a href="/">EN</a> | 日本語
+        {% set otherPage = alternates | where("hreflang", "en") | first %}
+        <a href="{{ (otherPage.href | replace(site.url, '')) if otherPage else '/' }}">EN</a> | 日本語
         {% else %}
-        EN | <a href="/ja/">日本語</a>
+        {% set otherPage = alternates | where("hreflang", "ja") | first %}
+        EN | <a href="{{ (otherPage.href | replace(site.url, '')) if otherPage else '/ja/' }}">日本語</a>
         {% endif %}
       </div>
     </div>

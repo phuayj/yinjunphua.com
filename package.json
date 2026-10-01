@@ -9,6 +9,8 @@
     "dev": "eleventy --serve --watch",
     "start": "npm run dev",
     "test": "npm run build",
+    "test:papers": "npm run build && node scripts/check-paper-pages.js",
+    "test:footer": "npm run build && node scripts/check-footer-layout.js",
     "screenshots:home": "node scripts/screenshot-mobile.js /",
     "screenshots:research": "node scripts/screenshot-mobile.js /my-research.html"
   },

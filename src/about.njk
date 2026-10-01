@@ -1,0 +1,111 @@
+---
+layout: layouts/page.njk
+pageTitle: "Background & Activities"
+lang: en
+description: "Yin Jun Phua's academic background, research grants, talks, lectures, awards, and thoughts."
+alternates:
+  - hreflang: en
+    href: "https://yinjunphua.com/about.html"
+  - hreflang: ja
+    href: "https://yinjunphua.com/ja/about.html"
+permalink: "/about.html"
+headingText: "Yin Jun, Phua"
+headingSmall: "Background & Activities"
+headingLink: "/"
+navRightHref: "/my-research.html"
+navRightLabel: "My Research"
+---
+<p>I'm an Assistant Professor at Institute of Science Tokyo, where I've been since October 2024. During my Ph.D., I developed deep learning techniques that extract symbolic rules from time series data. This page collects my grants, talks, lectures, and other activities.</p>
+<p class="link-row">
+  <a href="/my-research.html#publications">Publications and research</a>
+  <a href="{{ site.links.researchmap.en }}">Full profile on researchmap</a>
+</p>
+<h2>Research Projects/Grants</h2>
+{% for proj in projects.en %}
+<p class="list-entry">
+  <a target="_blank" href="{{ proj.url }}">{{ proj.title }}</a><br>
+  <strong>{{ proj.role }}</strong> <small class="text-grey">{{ proj.amount }}</small><br>
+  {{ proj.program }},<br>
+  {{ proj.sponsor }}<br>
+  <span class="text-grey">{{ proj.span }}</span>
+</p>
+{% endfor %}
+<h2>Talks &amp; Presentations</h2>
+{% for talk in presentations.en %}
+<div class="row mb-8">
+  <div class="col-2">{{ talk.date }}</div>
+  <div class="col-10">
+    <a href="{{ talk.url }}" target="_blank">{{ talk.title }}</a>{% if talk.slides %} <a href="{{ talk.slides }}">[Slides]</a>{% endif %}<br>
+    {{ talk.authors }}<br>
+    <span class="text-grey">{{ talk.venue }}{% if talk.note %} &mdash; {{ talk.note }}{% endif %}</span>
+  </div>
+</div>
+{% endfor %}
+<h2>Academic Service</h2>
+<p><a href="https://researchmap.jp/phuayj/committee_memberships/51051074">Program Committee, International Conference on Neurosymbolic Learning and Reasoning (NeSy)</a><br><span class="text-grey">2024 - Present</span></p>
+<div class="row">
+  <div class="col">
+    <h2>Education</h2>
+    <div class="row mb-8">
+      <div class="col-5">April 2019 - March 2022</div>
+      <div class="col-7">Ph.D. (Informatics),<br>Department of Informatics,<br>School of Multidisciplinary Sciences,<br>The Graduate University for Advanced Studies</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">April 2017 - March 2019</div>
+      <div class="col-7">Department of Informatics,<br>School of Computing,<br>Tokyo Institute of Technology</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">April 2013 - March 2017</div>
+      <div class="col-7">Department of Computer Science,<br>School of Engineering,<br>Tokyo Institute of Technology</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">April 2012 - March 2013</div>
+      <div class="col-7">Japanese Language Center for International Students,<br>Tokyo University of Foreign Studies</div>
+    </div>
+  </div>
+  <div class="col">
+    <h2>Research History</h2>
+    <div class="row mb-8">
+      <div class="col-5">October 2024 - Present</div>
+      <div class="col-7">Assistant Professor,<br><a href="http://www.net.comp.isct.ac.jp/">Murata Laboratory</a>,<br>School of Computing,<br>Institute of Science Tokyo</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">April 2022 - September 2024</div>
+      <div class="col-7">Assistant Professor,<br><a href="http://www.net.c.titech.ac.jp/">Murata Laboratory</a>,<br>School of Computing,<br>Tokyo Institute of Technology</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">April 2021 - March 2022</div>
+      <div class="col-7">Research fellowship (DC2),<br>Japan Society for the Promotion of Science</div>
+    </div>
+    <div class="row mb-8">
+      <div class="col-5">April 2019 - March 2021</div>
+      <div class="col-7">Special Research Assistant,<br><a href="http://research.nii.ac.jp/il/">Inoue Laboratory</a>,<br>National Institute of Informatics</div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <h2>Awards</h2>
+    <div class="row mb-8"><div class="col-2">2023</div><div class="col-10">Tokyo Tech Best Teacher Award (Joint Award)</div></div>
+    <div class="row mb-8"><div class="col-2">2023</div><div class="col-10">Best Paper Award, 1st Workshop on Visual Continual Learning, ICCV 2023</div></div>
+    <div class="row mb-8"><div class="col-2">2019</div><div class="col-10">Best Student Paper Award, ILP 2019</div></div>
+    <div class="row mb-8"><div class="col-2">2012</div><div class="col-10">MEXT Scholarship for Embassy Recommendation (Undergraduate)</div></div>
+  </div>
+  <div class="col">
+    <h2>Lectures</h2>
+    <div class="row mb-8"><div class="col-3">2025</div><div class="col-9"><a href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2025/">Advanced Procedural Programming (Japanese)</a></div></div>
+    <div class="row mb-8"><div class="col-3">2024</div><div class="col-9"><a href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2024">Advanced Procedural Programming (Japanese)</a></div></div>
+    <div class="row mb-8"><div class="col-3">2023</div><div class="col-9"><a href="https://sites.google.com/li.c.titech.ac.jp/procprog-h2023">Advanced Procedural Programming (Japanese)</a></div></div>
+    <div class="row mb-8"><div class="col-3">2022-2024</div><div class="col-9">Doctoral Forum on Computing</div></div>
+  </div>
+</div>
+<h2 id="notes">Thoughts</h2>
+<p>Some of my personal notes, with regards to research or education.</p>
+{% set englishThoughts = collections.thoughts | where("data.lang", "en") | reverse %}
+{% for post in englishThoughts %}
+<div class="row list-row">
+  <div class="col-2">{{ post.date | readableDate }}</div>
+  <div class="col-10"><a href="{{ post.url }}">{{ post.data.heading or post.data.title }}</a></div>
+</div>
+{% endfor %}
+<p><a href="/">&laquo; Back to home</a></p>

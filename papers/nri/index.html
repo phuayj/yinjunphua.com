@@ -312,6 +312,8 @@
   }
   .tldr p { color: var(--fg); margin: 0; font-size: 17px; }
   .tldr strong { color: var(--brand-primary); }
+  .research-update { max-width: 720px; margin: 20px auto 0; text-align: left; }
+  .research-update p { font-size: 15px; }
 
   /* Figure */
   figure {
@@ -496,8 +498,13 @@
     header.hero .abstract-line { font-size: 15px; }
     header.hero .rule-preview { padding: 12px 14px; }
     .two-col { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: minmax(0, 1fr); }
     section { padding: 40px 0; }
     .highlights { grid-template-columns: repeat(2, 1fr); }
+    /* Fit the results table on phones so the NRI column stays visible. */
+    th, td { padding: 10px 6px; }
+    th { font-size: 11px; letter-spacing: 0.02em; }
+    td:first-child { overflow-wrap: anywhere; }
   }
 
   /* BibTeX */
@@ -512,6 +519,11 @@
     line-height: 1.6;
     margin: 0;
     color: var(--fg-soft);
+  }
+
+  /* Wrap the TBD notice instead of clipping it on narrow screens. */
+  @media (max-width: 720px) {
+    pre.bib { white-space: pre-wrap; overflow-wrap: anywhere; padding: 14px 16px; }
   }
 
   /* Footer */
@@ -559,6 +571,10 @@
       <a class="alt" href="https://github.com/phuayj/neural-rule-inducer">Code</a>
       <a class="alt" href="#bibtex">BibTeX</a>
     </div>
+
+    <aside class="tldr research-update" aria-label="G-NRI follow-up">
+      <p><strong>New: G-NRI, accepted at NeSy 2026.</strong> The symmetry-aware extension takes NRI from small training problems to over a thousand variables. <a href="/papers/g-nri/">Explore G-NRI &rarr;</a></p>
+    </aside>
 
     <p class="abstract-line">
       Trained once on synthetic Boolean formulas, <strong>NRI</strong> induces
