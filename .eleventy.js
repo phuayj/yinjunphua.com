@@ -17,6 +17,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("robots.txt");
   eleventyConfig.addPassthroughCopy("site.webmanifest");
   eleventyConfig.addPassthroughCopy("favicon.ico");
+  eleventyConfig.addPassthroughCopy("favicon.svg");
   eleventyConfig.addPassthroughCopy("favicon-32x32.png");
   eleventyConfig.addPassthroughCopy("favicon-16x16.png");
   eleventyConfig.addPassthroughCopy("android-chrome-192x192.png");
